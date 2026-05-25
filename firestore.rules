@@ -1,0 +1,183 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function userProfile() {
+      return userDoc().data;
+    }
+
+    function hasUserProfile() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function isStaff() {
+      return hasUserProfile()
+        && userProfile().role in ['admin', 'gestor', 'profissional'];
+    }
+
+    function isAdmin() {
+      return hasUserProfile() && userProfile().role == 'admin';
+    }
+
+    function allowedRole(role) {
+      return role in ['jovem', 'profissional', 'gestor', 'admin'];
+    }
+
+    function validUserCreate(userId) {
+      return isSelf(userId)
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.role == 'jovem';
+    }
+
+    function validOwnerCreate() {
+      return signedIn() && request.resource.data.userId == request.auth.uid;
+    }
+
+    function ownsResource() {
+      return signedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    function ownsLegacyResource() {
+      return signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    match /users/{userId} {
+      allow create: if validUserCreate(userId);
+
+      allow get: if isSelf(userId) || isStaff();
+      allow list: if isStaff();
+
+      allow update: if isSelf(userId)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.email == resource.data.email
+        && (
+          request.resource.data.role == resource.data.role
+          || isAdmin()
+        );
+
+      allow delete: if false;
+    }
+
+    match /checkins/{checkinId} {
+      allow create: if validOwnerCreate()
+        && request.resource.data.emotion in [
+          'feliz',
+          'cansado',
+          'triste',
+          'ansioso',
+          'sozinho',
+          'motivado',
+          'sobrecarregado'
+        ]
+        && request.resource.data.intensity is number
+        && request.resource.data.intensity >= 1
+        && request.resource.data.intensity <= 10;
+
+      allow get, list: if ownsResource() || isStaff();
+
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /emotionalLogs/{logId} {
+      allow create: if validOwnerCreate()
+        && request.resource.data.risk in ['baixo', 'medio', 'alto'];
+
+      allow get, list: if ownsResource() || isStaff();
+
+      allow update: if isStaff()
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['status', 'updatedAt'])
+        && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido'];
+
+      allow delete: if isAdmin();
+    }
+
+    match /alerts/{alertId} {
+      allow create: if validOwnerCreate()
+        && request.resource.data.risk in ['medio', 'alto'];
+
+      allow get: if ownsResource() || isStaff();
+      allow list: if isStaff();
+
+      allow update: if isStaff()
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['status', 'updatedAt'])
+        && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido'];
+      allow delete: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow create: if signedIn()
+        && (
+          request.resource.data.userId == request.auth.uid
+          || isStaff()
+        );
+
+      allow get, list: if ownsResource() || isStaff();
+
+      allow update: if ownsResource() || isStaff();
+      allow delete: if ownsResource() || isAdmin();
+    }
+
+    match /supportMessages/{messageId} {
+      allow get, list: if signedIn();
+      allow create, update, delete: if isStaff();
+    }
+
+    match /adminStats/{statId} {
+      allow get, list: if isStaff();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /systemConfig/{configId} {
+      allow get, list: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Compatibilidade com a primeira versao do projeto.
+    match /usuarios/{userId} {
+      allow create: if isSelf(userId)
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email;
+
+      allow get: if isSelf(userId) || isStaff();
+      allow list: if isStaff();
+
+      allow update: if isSelf(userId)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.email == resource.data.email;
+
+      allow delete: if false;
+    }
+
+    // Compatibilidade com relatos antigos.
+    match /relatos/{relatoId} {
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid;
+
+      allow get: if ownsLegacyResource() || isStaff();
+      allow list: if isStaff();
+
+      allow update: if isStaff() || ownsLegacyResource();
+      allow delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
