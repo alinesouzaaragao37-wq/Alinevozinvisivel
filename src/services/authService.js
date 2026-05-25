@@ -7,7 +7,6 @@ import {
 } from 'firebase/auth'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { auth, db, hasFirebaseConfig } from '../firebase/config'
-import { ensureFirestoreAvailable } from '../firebase/firestoreStatus'
 
 function ensureFirebase() {
   if (!hasFirebaseConfig || !auth || !db) {
@@ -17,7 +16,6 @@ function ensureFirebase() {
 
 export async function registerWithEmail({ name, email, password }) {
   ensureFirebase()
-  await ensureFirestoreAvailable()
   const credential = await createUserWithEmailAndPassword(auth, email, password)
   await updateProfile(credential.user, { displayName: name })
 
@@ -41,7 +39,6 @@ export async function loginWithEmail(email, password) {
 
 export async function loginWithGoogle() {
   ensureFirebase()
-  await ensureFirestoreAvailable()
   const provider = new GoogleAuthProvider()
   const credential = await signInWithPopup(auth, provider)
   const userRef = doc(db, 'users', credential.user.uid)

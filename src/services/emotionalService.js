@@ -12,7 +12,6 @@ import {
   where,
 } from 'firebase/firestore'
 import { db, hasFirebaseConfig } from '../firebase/config'
-import { ensureFirestoreAvailable } from '../firebase/firestoreStatus'
 import { analisarRelato } from './analisarRelato'
 
 function requireDb() {
@@ -23,7 +22,6 @@ function requireDb() {
 
 export async function saveCheckin({ user, profile, emotion, intensity, note }) {
   requireDb()
-  await ensureFirestoreAvailable()
   return addDoc(collection(db, 'checkins'), {
     userId: user.uid,
     userName: profile?.name || user.displayName || 'Pessoa acolhida',
@@ -36,7 +34,6 @@ export async function saveCheckin({ user, profile, emotion, intensity, note }) {
 
 export async function saveDiaryEntry({ user, profile, text, emotion }) {
   requireDb()
-  await ensureFirestoreAvailable()
   const analysis = analisarRelato(text, emotion)
   const payload = {
     userId: user.uid,
@@ -100,13 +97,11 @@ export function listenAdminCollection(name, callback, onError) {
 
 export async function updateAlertStatus(id, status) {
   requireDb()
-  await ensureFirestoreAvailable()
   return updateDoc(doc(db, 'alerts', id), { status, updatedAt: serverTimestamp() })
 }
 
 export async function getUsersCount() {
   requireDb()
-  await ensureFirestoreAvailable()
   const snapshot = await getCountFromServer(collection(db, 'users'))
   return snapshot.data().count
 }

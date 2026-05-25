@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { auth, db, hasFirebaseConfig } from '../firebase/config'
-import { ensureFirestoreAvailable } from '../firebase/firestoreStatus'
 import { AuthContext } from './authContextValue'
 
 export function AuthProvider({ children }) {
@@ -27,7 +26,6 @@ export function AuthProvider({ children }) {
       }
 
       try {
-        await ensureFirestoreAvailable()
         setFirestoreError(null)
         const profileRef = doc(db, 'users', currentUser.uid)
         const snapshot = await getDoc(profileRef)

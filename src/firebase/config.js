@@ -11,9 +11,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
 }
 
-export const firebaseProjectId = firebaseConfig.projectId
-export const firebaseApiKey = firebaseConfig.apiKey
-
 const placeholders = ['cole_', 'coloque_', 'seu-', 'seu_']
 
 export const hasFirebaseConfig = Object.values(firebaseConfig).every(
