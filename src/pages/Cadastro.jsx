@@ -38,12 +38,15 @@ function Cadastro() {
   return (
     <main className="auth-page">
       <form className="auth-card wide" onSubmit={submit}>
-        <span className="eyebrow">Novo acesso</span>
-        <h1>Cadastro</h1>
+        <span className="eyebrow">Comece com calma</span>
+        <h1>Crie seu espaco de cuidado.</h1>
         <p>
-          Crie uma conta para acessar check-ins, diario emocional e historico de
-          acompanhamento.
+          Aqui voce pode registrar sentimentos, acompanhar sua jornada e buscar
+          apoio com mais clareza.
         </p>
+        <div className="auth-care-note">
+          Seus registros sao pessoais e devem ser tratados com respeito e privacidade.
+        </div>
 
         <label>
           Nome

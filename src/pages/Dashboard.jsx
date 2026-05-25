@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import Chatbot from '../components/Chatbot'
+import CareBanner from '../components/CareBanner'
 import EmotionalChart from '../components/EmotionalChart'
 import StatCard from '../components/StatCard'
 import { traduzirErroFirebase } from '../firebase/errors'
@@ -17,6 +18,16 @@ const emotions = [
   { id: 'motivado', label: 'Motivado', icon: '^' },
   { id: 'sobrecarregado', label: 'Sobrecarregado', icon: '++' },
 ]
+
+const emotionMessages = {
+  feliz: 'Que bom perceber esse momento. Guarde o que ajudou o seu dia a ficar mais leve.',
+  cansado: 'Descansar tambem e cuidado. Voce nao precisa dar conta de tudo hoje.',
+  triste: 'Sentir tristeza nao diminui voce. Obrigado por dar nome ao que esta acontecendo.',
+  ansioso: 'Vamos por partes. Respirar e registrar este momento pode ajudar a trazer um pouco de clareza.',
+  sozinho: 'Sua presenca importa. Se for possivel, aproxime-se de alguem seguro ainda hoje.',
+  motivado: 'Reconhecer sua energia tambem faz parte do cuidado. Celebre este passo.',
+  sobrecarregado: 'Ha muita coisa pesando agora. Escolha uma prioridade pequena e permita-se pedir apoio.',
+}
 
 function Dashboard() {
   const { user, profile, isAdmin, firestoreError } = useAuth()
@@ -81,7 +92,7 @@ function Dashboard() {
         note,
       })
       setNote('')
-      notify('Check-in salvo no Firestore.')
+      notify('Check-in registrado. Obrigado por cuidar de voce hoje.')
     } catch (err) {
       setError(traduzirErroFirebase(err))
     } finally {
@@ -114,6 +125,8 @@ function Dashboard() {
         <StatCard label="Alertas altos" value={highRiskCount} detail="sinais preventivos" tone="danger" />
       </section>
 
+      <CareBanner compact />
+
       <section className="dashboard-grid">
         <form className="panel checkin-panel" onSubmit={submitCheckin}>
           <div className="panel-heading">
@@ -132,6 +145,10 @@ function Dashboard() {
                 {emotion.label}
               </button>
             ))}
+          </div>
+          <div className="support-message" role="status">
+            <strong>Para este momento</strong>
+            <p>{emotionMessages[selectedEmotion]}</p>
           </div>
           <label>
             Intensidade

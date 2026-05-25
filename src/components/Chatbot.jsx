@@ -11,6 +11,13 @@ const quickReplies = {
     'Pedir ajuda nao diminui voce. Em risco imediato, procure emergencia, unidade de saude ou alguem proximo agora.',
 }
 
+const prompts = [
+  { label: 'Estou ansioso', text: 'Estou com ansiedade hoje.' },
+  { label: 'Me sinto sozinho', text: 'Estou me sentindo sozinho.' },
+  { label: 'Estou cansado', text: 'Estou cansado emocionalmente.' },
+  { label: 'Preciso de ajuda', text: 'Preciso de ajuda agora.' },
+]
+
 function Chatbot() {
   const [messages, setMessages] = useState([
     {
@@ -44,7 +51,15 @@ function Chatbot() {
     <section className="chatbot panel">
       <div className="panel-heading">
         <span className="eyebrow">Chat acolhedor</span>
-        <h2>Presenca imediata</h2>
+        <h2>Eu estou aqui para te escutar.</h2>
+        <p>Escolha uma frase para comecar ou escreva do seu jeito.</p>
+      </div>
+      <div className="chat-prompts" aria-label="Sugestoes de conversa">
+        {prompts.map((prompt) => (
+          <button key={prompt.label} onClick={() => setText(prompt.text)} type="button">
+            {prompt.label}
+          </button>
+        ))}
       </div>
       <div className="chat-window">
         {messages.map((message, index) => (
@@ -63,6 +78,10 @@ function Chatbot() {
           Enviar
         </button>
       </form>
+      <p className="chat-help">
+        Se voce estiver em risco imediato, busque ajuda presencial agora. No Brasil,
+        o CVV atende gratuitamente pelo 188, 24 horas por dia.
+      </p>
     </section>
   )
 }

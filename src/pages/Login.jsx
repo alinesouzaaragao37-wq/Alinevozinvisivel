@@ -47,9 +47,12 @@ function Login() {
   return (
     <main className="auth-page">
       <form className="auth-card" onSubmit={submit}>
-        <span className="eyebrow">Acesso seguro</span>
-        <h1>Entrar</h1>
-        <p>Continue seu registro emocional em um ambiente privado e acolhedor.</p>
+        <span className="eyebrow">Bem-vindo de volta</span>
+        <h1>Seu espaco espera por voce.</h1>
+        <p>Entre para continuar seus registros com privacidade e acolhimento.</p>
+        <div className="auth-care-note">
+          O que voce sente importa. Voltar a registrar tambem e uma forma de se cuidar.
+        </div>
 
         <label>
           Email

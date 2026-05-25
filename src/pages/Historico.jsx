@@ -64,7 +64,12 @@ function Historico() {
             <span className="eyebrow">Linha do tempo</span>
             <h2>Ultimos registros</h2>
           </div>
-          {timeline.length === 0 && <p className="empty-state">Nenhum registro ainda.</p>}
+          {timeline.length === 0 && (
+            <div className="empty-state warm">
+              <strong>Sua jornada pode comecar hoje.</strong>
+              <p>Faca um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.</p>
+            </div>
+          )}
           {timeline.map((item) => (
             <article className="timeline-item" key={`${item.type}-${item.id}`}>
               <span>{item.type}</span>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import CareBanner from '../components/CareBanner'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../hooks/useToast'
@@ -45,8 +46,14 @@ function Diario() {
         </p>
       </section>
 
+      <CareBanner compact />
+
       <section className="diary-layout">
         <form className="panel diary-form" onSubmit={submit}>
+          <p className="form-intro">
+            Este espaco e seu. Escreva no seu ritmo; nao ha jeito certo de
+            explicar um sentimento.
+          </p>
           <label>
             Emocao principal
             <select value={emotion} onChange={(event) => setEmotion(event.target.value)}>
@@ -74,8 +81,8 @@ function Diario() {
         </form>
 
         <aside className="panel ai-panel">
-          <span className="eyebrow">IA humanizada</span>
-          <h2>Como a analise funciona</h2>
+          <span className="eyebrow">Devolutiva cuidadosa</span>
+          <h2>Uma leitura para apoiar seus proximos passos</h2>
           <p>
             O motor local avalia palavras-chave como sozinho, cansado,
             ansiedade, vazio, desaparecer e desistir. Depois soma o contexto da

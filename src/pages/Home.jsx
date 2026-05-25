@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import CareBanner from '../components/CareBanner'
 
 function Home() {
   return (
@@ -34,13 +35,13 @@ function Home() {
               </div>
             </div>
 
-            <div className="product-console" aria-label="Previa operacional da plataforma">
+            <div className="product-console" aria-label="Previa da jornada de cuidado">
               <div className="console-top">
                 <div>
-                  <span>Monitoramento preventivo</span>
-                  <strong>Hoje, 14:32</strong>
+                  <span>Acolhimento em andamento</span>
+                  <strong>Um passo de cada vez</strong>
                 </div>
-                <em>ativo</em>
+                <em>presente</em>
               </div>
 
               <div className="risk-board">
@@ -60,10 +61,10 @@ function Home() {
 
               <div className="triage-card">
                 <div>
-                  <span>Relato analisado</span>
+                  <span>Mensagem acolhedora</span>
                   <p>"Estou cansado emocionalmente e me sentindo sozinho."</p>
                 </div>
-                <strong>risco medio</strong>
+                <strong>voce merece apoio</strong>
               </div>
 
               <div className="console-chart">
@@ -127,6 +128,7 @@ function Home() {
           </article>
         </div>
       </section>
+      <CareBanner />
     </main>
   )
 }
