@@ -69,24 +69,12 @@ export async function saveDiaryEntry({ user, profile, text, emotion }) {
 
 export function listenUserCheckins(userId, callback, onError) {
   requireDb()
-  const q = query(
-    collection(db, 'checkins'),
-    where('userId', '==', userId),
-    orderBy('createdAt', 'desc'),
-    limit(30),
-  )
-  return onSnapshot(q, (snapshot) => callback(snapshot.docs.map(mapDoc)), onError)
+  return listenRecentUserCollection('checkins', userId, callback, onError)
 }
 
 export function listenUserLogs(userId, callback, onError) {
   requireDb()
-  const q = query(
-    collection(db, 'emotionalLogs'),
-    where('userId', '==', userId),
-    orderBy('createdAt', 'desc'),
-    limit(30),
-  )
-  return onSnapshot(q, (snapshot) => callback(snapshot.docs.map(mapDoc)), onError)
+  return listenRecentUserCollection('emotionalLogs', userId, callback, onError)
 }
 
 export function listenAdminCollection(name, callback, onError) {
@@ -108,4 +96,19 @@ export async function getUsersCount() {
 
 function mapDoc(item) {
   return { id: item.id, ...item.data() }
+}
+
+function listenRecentUserCollection(name, userId, callback, onError) {
+  const userQuery = query(collection(db, name), where('userId', '==', userId))
+  return onSnapshot(
+    userQuery,
+    (snapshot) => callback(snapshot.docs.map(mapDoc).sort(sortByCreatedAtDesc).slice(0, 30)),
+    onError,
+  )
+}
+
+function sortByCreatedAtDesc(a, b) {
+  const left = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0
+  const right = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0
+  return right - left
 }
