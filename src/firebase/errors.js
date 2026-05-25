@@ -16,7 +16,8 @@ export function traduzirErroFirebase(error) {
   const mensagens = {
     'auth/email-already-in-use': 'Este email ja esta cadastrado.',
     'auth/invalid-email': 'Informe um email valido.',
-    'auth/invalid-credential': 'Email ou senha incorretos.',
+    'auth/invalid-credential':
+      'Conta nao encontrada ou senha incorreta. Se este for seu primeiro acesso neste ambiente, crie seu cadastro.',
     'auth/configuration-not-found':
       'O Firebase Authentication ainda nao esta configurado para este projeto.',
     'auth/admin-restricted-operation':
