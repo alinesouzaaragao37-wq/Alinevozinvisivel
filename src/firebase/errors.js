@@ -13,6 +13,10 @@ export function traduzirErroFirebase(error) {
     return 'Crie o banco Cloud Firestore no Console Firebase para salvar check-ins.'
   }
 
+  if (code === 'failed-precondition' || message.includes('requires an index')) {
+    return 'Os indices do Firestore ainda estao sendo criados ou nao foram publicados. Publique os indices de check-ins e diario no Firebase.'
+  }
+
   const mensagens = {
     'auth/email-already-in-use': 'Este email ja esta cadastrado.',
     'auth/invalid-email': 'Informe um email valido.',
