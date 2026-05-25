@@ -9,7 +9,7 @@ MVP full stack em React, Vite e Firebase para sensibilidade publica, acolhimento
 - Dashboard do jovem com check-in emocional diario.
 - Diario emocional com IA textual simples baseada em palavras-chave.
 - Classificacao preventiva de risco: baixo, medio e alto.
-- Chatbot acolhedor com respostas humanizadas.
+- Chatbot acolhedor com respostas reais geradas por IA em backend protegido.
 - Historico com ultimos registros, emocoes frequentes e grafico simples.
 - Perfil do usuario.
 - Painel administrativo com usuarios, check-ins, relatos, emocoes frequentes e alertas.
@@ -59,8 +59,33 @@ VITE_FIREBASE_APP_ID=...
 ```bash
 firebase login
 firebase use --add
-firebase deploy --only firestore:rules
+firebase deploy --only firestore:rules,firestore:indexes
 ```
+
+## Configurar chatbot com IA real
+
+O chatbot usa uma **Firebase Cloud Function** para manter a chave da OpenAI fora do navegador. A conversa exige usuario autenticado e contem protecao imediata local e moderacao de mensagens relacionadas a autolesao antes de gerar respostas.
+
+1. No projeto Firebase `voz-invisivel-1e5f9`, habilite Cloud Functions. A publicacao de funcoes normalmente requer o plano Blaze.
+2. Instale as dependencias do backend:
+
+```bash
+npm install --prefix functions
+```
+
+3. Com o Firebase CLI autenticado, cadastre a chave da OpenAI como segredo:
+
+```bash
+firebase functions:secrets:set OPENAI_API_KEY --project voz-invisivel-1e5f9
+```
+
+4. Publique a funcao:
+
+```bash
+firebase deploy --only functions:respondToChat --project voz-invisivel-1e5f9
+```
+
+O modelo padrao e `gpt-5-mini`; ele pode ser alterado no parametro `OPENAI_CHAT_MODEL` durante a publicacao. Nunca coloque `OPENAI_API_KEY` no arquivo `.env` do frontend.
 
 ## Estrutura Firestore
 
@@ -170,6 +195,8 @@ src/
   pages/            Home, Login, Cadastro, Dashboard, Diario, Historico, Perfil, Admin
   services/         autenticacao, Firestore e IA textual
   index.css         design system responsivo do MVP
+functions/
+  index.js          chatbot real via OpenAI em Cloud Functions
 ```
 
 ## Deploy
@@ -179,7 +206,7 @@ Para publicar em Firebase Hosting, atualize `firebase.json` com Hosting ou use:
 ```bash
 firebase init hosting
 npm run build
-firebase deploy
+firebase deploy --only hosting,firestore:rules,firestore:indexes,functions
 ```
 
 Configuracao recomendada:

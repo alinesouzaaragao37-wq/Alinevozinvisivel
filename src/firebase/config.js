@@ -21,7 +21,7 @@ export const hasFirebaseConfig = Object.values(firebaseConfig).every(
     ),
 )
 
-const app = hasFirebaseConfig ? initializeApp(firebaseConfig) : null
+export const app = hasFirebaseConfig ? initializeApp(firebaseConfig) : null
 
 export const auth = app ? getAuth(app) : null
 export const db = app ? getFirestore(app) : null

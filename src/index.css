@@ -1029,6 +1029,11 @@ textarea {
   border-radius: 17px 17px 4px 17px;
 }
 
+.chat-message.typing {
+  color: var(--muted);
+  font-style: italic;
+}
+
 .chat-form {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

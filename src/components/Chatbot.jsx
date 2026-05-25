@@ -1,15 +1,5 @@
-import { useMemo, useState } from 'react'
-
-const quickReplies = {
-  ansiedade:
-    'Respira comigo por alguns segundos. Voce pode nomear uma coisa que esta sentindo e uma coisa pequena que esta ao seu alcance agora?',
-  sozinho:
-    'Sentir-se sozinho pesa muito. Talvez uma mensagem simples para alguem de confianca ja abra uma fresta de apoio.',
-  cansado:
-    'Cansaco emocional tambem e sinal. Pausar, beber agua e reduzir uma exigencia do dia pode ser um primeiro cuidado.',
-  ajuda:
-    'Pedir ajuda nao diminui voce. Em risco imediato, procure emergencia, unidade de saude ou alguem proximo agora.',
-}
+import { useState } from 'react'
+import { getChatReply } from '../services/chatService'
 
 const prompts = [
   { label: 'Estou ansioso', text: 'Estou com ansiedade hoje.' },
@@ -26,25 +16,30 @@ function Chatbot() {
     },
   ])
   const [text, setText] = useState('')
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
 
-  const suggestion = useMemo(() => {
-    const normalized = text.toLowerCase()
-    return (
-      Object.entries(quickReplies).find(([key]) => normalized.includes(key))?.[1] ||
-      'Obrigado por dividir isso. O que voce sente faz sentido e merece cuidado. Tente escrever uma frase sobre o que mais pesou hoje.'
-    )
-  }, [text])
-
-  function send(event) {
+  async function send(event) {
     event.preventDefault()
-    if (!text.trim()) return
+    const content = text.trim()
+    if (!content || sending) return
 
-    setMessages((current) => [
-      ...current,
-      { from: 'user', text },
-      { from: 'bot', text: suggestion },
-    ])
+    const conversation = [...messages, { from: 'user', text: content }]
+    setMessages(conversation)
     setText('')
+    setError('')
+    setSending(true)
+
+    try {
+      const result = await getChatReply(conversation)
+      setMessages((current) => [...current, { from: 'bot', text: result.reply }])
+    } catch {
+      setError(
+        'Nao consegui responder agora. Tente novamente em instantes ou procure apoio humano se precisar.',
+      )
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -67,18 +62,23 @@ function Chatbot() {
             {message.text}
           </p>
         ))}
+        {sending && <p className="chat-message bot typing">Pensando em uma resposta cuidadosa...</p>}
       </div>
       <form className="chat-form" onSubmit={send}>
         <input
           value={text}
           onChange={(event) => setText(event.target.value)}
-          placeholder="Escreva uma palavra ou sentimento..."
+          placeholder="Conte um pouco do que voce esta sentindo..."
+          disabled={sending}
         />
-        <button className="button primary" type="submit">
-          Enviar
+        <button className="button primary" type="submit" disabled={sending || !text.trim()}>
+          {sending ? 'Respondendo...' : 'Enviar'}
         </button>
       </form>
+      {error && <p className="form-error">{error}</p>}
       <p className="chat-help">
+        Suas mensagens sao processadas por inteligencia artificial para responder a conversa.
+        Evite compartilhar dados pessoais.{' '}
         Se voce estiver em risco imediato, busque ajuda presencial agora. No Brasil,
         o CVV atende gratuitamente pelo 188, 24 horas por dia.
       </p>
