@@ -5,7 +5,6 @@ import {
   getCountFromServer,
   limit,
   onSnapshot,
-  orderBy,
   query,
   serverTimestamp,
   updateDoc,
@@ -122,8 +121,12 @@ export function listenAdminCollection(name, callback, onError) {
   }
 
   requireDb()
-  const q = query(collection(db, name), orderBy('createdAt', 'desc'), limit(100))
-  return onSnapshot(q, (snapshot) => callback(snapshot.docs.map(mapDoc)), onError)
+  const q = query(collection(db, name), limit(100))
+  return onSnapshot(
+    q,
+    (snapshot) => callback(snapshot.docs.map(mapDoc).sort(sortByCreatedAtDesc)),
+    onError,
+  )
 }
 
 export async function updateAlertStatus(id, status) {

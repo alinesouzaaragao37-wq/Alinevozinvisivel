@@ -122,7 +122,7 @@ function Dashboard() {
       <section className="stats-grid">
         <StatCard label="Check-ins" value={checkins.length} detail="últimos registros" />
         <StatCard label="Emoção frequente" value={mostFrequentEmotion} detail="baseado no histórico" />
-        <StatCard label="Diário" value={logs.length} detail="relatos analisados por IA" />
+        <StatCard label="Diário" value={logs.length} detail="relatos analisados" />
         <StatCard label="Alertas altos" value={highRiskCount} detail="sinais preventivos" tone="danger" />
       </section>
 

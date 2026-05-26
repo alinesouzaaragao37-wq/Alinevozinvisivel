@@ -77,7 +77,7 @@ function Chatbot() {
       </form>
       {error && <p className="form-error">{error}</p>}
       <p className="chat-help">
-        Suas mensagens são processadas por inteligência artificial para responder à conversa.
+        Suas mensagens recebem uma orientação automatizada de acolhimento.
         Evite compartilhar dados pessoais.{' '}
         Se você estiver em risco imediato, busque ajuda presencial agora. No Brasil,
         o CVV atende gratuitamente pelo 188, 24 horas por dia.

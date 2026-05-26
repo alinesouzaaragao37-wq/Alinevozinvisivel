@@ -17,7 +17,7 @@ O **Voz Invisível** nasce para apoiar esse percurso: a pessoa pode registrar em
 - Dashboard do jovem com check-in emocional diário.
 - Diário emocional com IA textual simples baseada em palavras-chave.
 - Classificação preventiva de risco: baixo, médio e alto.
-- Chatbot acolhedor com respostas reais geradas por IA em backend protegido.
+- Chatbot acolhedor com orientação automatizada e opção de IA em backend protegido.
 - Histórico com últimos registros, emoções frequentes e gráfico simples.
 - Perfil do usuário.
 - Painel administrativo com usuários, check-ins, relatos, emoções frequentes e alertas.
@@ -61,6 +61,8 @@ VITE_FIREBASE_STORAGE_BUCKET=...
 VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=...
 VITE_FIREBASE_USE_FIRESTORE=true
+VITE_FIREBASE_FIRESTORE_DATABASE_ID=(default)
+VITE_FIREBASE_USE_AI_CHAT=false
 ```
 
 6. Publique as regras:
@@ -68,17 +70,24 @@ VITE_FIREBASE_USE_FIRESTORE=true
 ```bash
 firebase login
 firebase use --add
-firebase deploy --only firestore:rules,firestore:indexes
+firebase deploy --only firestore:rules
 ```
 
 Enquanto o banco ainda não tiver sido criado, mantenha
 `VITE_FIREBASE_USE_FIRESTORE=false`. Nesse modo, autenticação continua no
 Firebase e os registros ficam somente no navegador, sem sincronização em
 nuvem. Depois de criar o Firestore e publicar as regras, altere para `true`.
+Se o projeto usar um banco nomeado, informe seu ID em
+`VITE_FIREBASE_FIRESTORE_DATABASE_ID`; o projeto `voz-invisivel-3ed80` usa
+`default`, sem parênteses.
 
 ## Configurar chatbot com IA real
 
-O chatbot usa uma **Firebase Cloud Function** para manter a chave da OpenAI fora do navegador. A conversa exige usuário autenticado e contém proteção imediata local e moderação de mensagens relacionadas a autolesão antes de gerar respostas.
+Por padrão, o chatbot fornece orientação automatizada local, sem depender de
+serviço pago. Para habilitar respostas reais geradas por IA, ele usa uma
+**Firebase Cloud Function** para manter a chave da OpenAI fora do navegador.
+A conversa exige usuário autenticado e contém proteção imediata local e
+moderação de mensagens relacionadas a autolesão antes de gerar respostas.
 
 1. No projeto Firebase `voz-invisivel-3ed80`, habilite Cloud Functions. A publicação de funções normalmente requer o plano Blaze.
 2. Instale as dependências do backend:
@@ -98,6 +107,8 @@ firebase functions:secrets:set OPENAI_API_KEY --project voz-invisivel-3ed80
 ```bash
 firebase deploy --only functions:respondToChat --project voz-invisivel-3ed80
 ```
+
+5. Altere `VITE_FIREBASE_USE_AI_CHAT=true` e publique novamente o frontend.
 
 O modelo padrão é `gpt-5-mini`; ele pode ser alterado no parâmetro `OPENAI_CHAT_MODEL` durante a publicação. Nunca coloque `OPENAI_API_KEY` no arquivo `.env` do frontend.
 
@@ -220,7 +231,7 @@ Para publicar em Firebase Hosting, atualize `firebase.json` com Hosting ou use:
 ```bash
 firebase init hosting
 npm run build
-firebase deploy --only hosting,firestore:rules,firestore:indexes,functions
+firebase deploy --only hosting,firestore:rules,functions
 ```
 
 Configuração recomendada:

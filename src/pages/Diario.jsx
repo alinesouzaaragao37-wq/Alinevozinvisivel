@@ -43,7 +43,7 @@ function Diario() {
         <span className="eyebrow">Diário emocional</span>
         <h1>Escreva com suas palavras.</h1>
         <p>
-          A IA textual procura sinais preventivos e devolve uma mensagem de
+          A análise textual procura sinais preventivos e devolve uma mensagem de
           acolhimento. Esta análise não substitui atendimento profissional.
         </p>
       </section>
@@ -92,7 +92,7 @@ function Diario() {
           <span className="eyebrow">Devolutiva cuidadosa</span>
           <h2>Uma leitura para apoiar seus próximos passos</h2>
           <p>
-            O motor local avalia palavras-chave como sozinho, cansado,
+            O motor de análise avalia palavras-chave como sozinho, cansado,
             ansiedade, vazio, desaparecer e desistir. Depois soma o contexto da
             emoção escolhida e classifica o risco em baixo, médio ou alto.
           </p>

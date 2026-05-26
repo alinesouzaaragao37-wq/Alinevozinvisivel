@@ -26,4 +26,10 @@ export const app = hasFirebaseConfig ? initializeApp(firebaseConfig) : null
 export const auth = app ? getAuth(app) : null
 export const cloudFirestoreEnabled =
   hasFirebaseConfig && import.meta.env.VITE_FIREBASE_USE_FIRESTORE === 'true'
-export const db = app && cloudFirestoreEnabled ? getFirestore(app) : null
+const firestoreDatabaseId = import.meta.env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || '(default)'
+export const db =
+  app && cloudFirestoreEnabled
+    ? firestoreDatabaseId === '(default)'
+      ? getFirestore(app)
+      : getFirestore(app, firestoreDatabaseId)
+    : null
