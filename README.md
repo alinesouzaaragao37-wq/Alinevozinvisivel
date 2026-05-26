@@ -19,6 +19,7 @@ O **Voz Invisível** nasce para apoiar esse percurso: a pessoa pode registrar em
 - Classificação preventiva de risco: baixo, médio e alto.
 - Chatbot acolhedor com orientação automatizada e opção de IA em backend protegido.
 - Histórico com últimos registros, emoções frequentes e gráfico simples.
+- Edição e exclusão dos próprios check-ins e relatos, com confirmação antes de remover.
 - Perfil do usuário.
 - Painel administrativo com usuários, check-ins, relatos, emoções frequentes e alertas.
 - Firestore organizado em `users`, `checkins`, `emotionalLogs` e `alerts`.

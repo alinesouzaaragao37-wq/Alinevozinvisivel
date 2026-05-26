@@ -1,8 +1,10 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getCountFromServer,
+  getDocs,
   limit,
   onSnapshot,
   query,
@@ -152,6 +154,101 @@ export async function getUsersCount() {
   return snapshot.data().count
 }
 
+export async function updatePersonalRecord({ type, id, user, emotion, intensity, note, text }) {
+  if (type === 'Check-in') {
+    const values = { emotion, intensity: Number(intensity), note }
+    return updateRecord('checkins', id, values)
+  }
+
+  const analysis = analisarRelato(text, emotion)
+  const values = {
+    text,
+    emotion,
+    risk: analysis.risk,
+    score: analysis.score,
+    detectedWords: analysis.detectedWords,
+    supportiveMessage: analysis.supportiveMessage,
+    recommendation: analysis.recommendation,
+  }
+
+  if (!cloudFirestoreEnabled) {
+    updateLocalItem('emotionalLogs', id, values)
+    syncLocalAlert(id, user, analysis)
+    return
+  }
+
+  requireDb()
+  await updateDoc(doc(db, 'emotionalLogs', id), { ...values, updatedAt: serverTimestamp() })
+  await syncCloudAlert(id, user, analysis)
+}
+
+export async function deletePersonalRecord({ type, id, userId }) {
+  const collectionName = type === 'Check-in' ? 'checkins' : 'emotionalLogs'
+
+  if (!cloudFirestoreEnabled) {
+    deleteLocalItem(collectionName, id)
+    if (type === 'Diário') {
+      deleteLocalAlerts(id)
+    }
+    return
+  }
+
+  requireDb()
+  await deleteDoc(doc(db, collectionName, id))
+
+  if (type === 'Diário') {
+    const snapshot = await getDocs(
+      query(collection(db, 'alerts'), where('userId', '==', userId)),
+    )
+    const relatedAlerts = snapshot.docs.filter((item) => item.data().logId === id)
+    await Promise.all(relatedAlerts.map((item) => deleteDoc(item.ref)))
+  }
+}
+
+async function updateRecord(name, id, values) {
+  if (!cloudFirestoreEnabled) {
+    updateLocalItem(name, id, values)
+    return
+  }
+
+  requireDb()
+  return updateDoc(doc(db, name, id), { ...values, updatedAt: serverTimestamp() })
+}
+
+async function syncCloudAlert(logId, user, analysis) {
+  const snapshot = await getDocs(
+    query(collection(db, 'alerts'), where('userId', '==', user.uid)),
+  )
+  const relatedAlerts = snapshot.docs.filter((item) => item.data().logId === logId)
+  const alert = relatedAlerts[0]
+
+  if (analysis.risk === 'baixo') {
+    await Promise.all(relatedAlerts.map((item) => deleteDoc(item.ref)))
+    return
+  }
+
+  const values = {
+    risk: analysis.risk,
+    score: analysis.score,
+    detectedWords: analysis.detectedWords,
+    updatedAt: serverTimestamp(),
+  }
+
+  if (alert) {
+    await updateDoc(alert.ref, values)
+    return
+  }
+
+  await addDoc(collection(db, 'alerts'), {
+    logId,
+    userId: user.uid,
+    userName: user.displayName || 'Pessoa acolhida',
+    ...values,
+    status: 'novo',
+    createdAt: serverTimestamp(),
+  })
+}
+
 function mapDoc(item) {
   return { id: item.id, ...item.data() }
 }
@@ -199,6 +296,42 @@ function addLocalItem(name, payload) {
   }
   writeLocalCollection(name, [item, ...readLocalCollection(name)])
   return item
+}
+
+function updateLocalItem(name, id, values) {
+  const items = readLocalCollection(name).map((item) =>
+    item.id === id ? { ...item, ...values, updatedAt: new Date().toISOString() } : item,
+  )
+  writeLocalCollection(name, items)
+}
+
+function deleteLocalItem(name, id) {
+  writeLocalCollection(
+    name,
+    readLocalCollection(name).filter((item) => item.id !== id),
+  )
+}
+
+function deleteLocalAlerts(logId) {
+  writeLocalCollection(
+    'alerts',
+    readLocalCollection('alerts').filter((item) => item.logId !== logId),
+  )
+}
+
+function syncLocalAlert(logId, user, analysis) {
+  deleteLocalAlerts(logId)
+  if (analysis.risk !== 'baixo') {
+    addLocalItem('alerts', {
+      logId,
+      userId: user.uid,
+      userName: user.displayName || 'Pessoa acolhida',
+      risk: analysis.risk,
+      score: analysis.score,
+      detectedWords: analysis.detectedWords,
+      status: 'novo',
+    })
+  }
 }
 
 function listenLocalCollection(name, callback, filter = () => true) {

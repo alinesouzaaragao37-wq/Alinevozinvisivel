@@ -88,8 +88,22 @@ service cloud.firestore {
 
       allow get, list: if ownsResource() || isStaff();
 
-      allow update: if false;
-      allow delete: if false;
+      allow update: if ownsResource()
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['emotion', 'intensity', 'note', 'updatedAt'])
+        && request.resource.data.emotion in [
+          'feliz',
+          'cansado',
+          'triste',
+          'ansioso',
+          'sozinho',
+          'motivado',
+          'sobrecarregado'
+        ]
+        && request.resource.data.intensity is number
+        && request.resource.data.intensity >= 1
+        && request.resource.data.intensity <= 10;
+      allow delete: if ownsResource();
     }
 
     match /emotionalLogs/{logId} {
@@ -98,26 +112,48 @@ service cloud.firestore {
 
       allow get, list: if ownsResource() || isStaff();
 
-      allow update: if isStaff()
-        && request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['status', 'updatedAt'])
-        && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido'];
+      allow update: if (
+        isStaff()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'updatedAt'])
+          && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido']
+        ) || (
+          ownsResource()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly([
+              'text',
+              'emotion',
+              'risk',
+              'score',
+              'detectedWords',
+              'supportiveMessage',
+              'recommendation',
+              'updatedAt'
+            ])
+          && request.resource.data.risk in ['baixo', 'medio', 'alto']
+        );
 
-      allow delete: if isAdmin();
+      allow delete: if ownsResource() || isAdmin();
     }
 
     match /alerts/{alertId} {
       allow create: if validOwnerCreate()
         && request.resource.data.risk in ['medio', 'alto'];
 
-      allow get: if ownsResource() || isStaff();
-      allow list: if isStaff();
+      allow get, list: if ownsResource() || isStaff();
 
-      allow update: if isStaff()
-        && request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['status', 'updatedAt'])
-        && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido'];
-      allow delete: if isAdmin();
+      allow update: if (
+        isStaff()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'updatedAt'])
+          && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido']
+        ) || (
+          ownsResource()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['risk', 'score', 'detectedWords', 'updatedAt'])
+          && request.resource.data.risk in ['medio', 'alto']
+        );
+      allow delete: if ownsResource() || isAdmin();
     }
 
     match /notifications/{notificationId} {
