@@ -1,4 +1,4 @@
-export function traduzirErroFirebase(error) {
+export function traduzirErroFirebase(error, authProvider = '') {
   const code = error?.code || ''
   const message = String(error?.message || '').toLowerCase()
 
@@ -15,6 +15,10 @@ export function traduzirErroFirebase(error) {
 
   if (code === 'failed-precondition' || message.includes('requires an index')) {
     return 'Os índices do Firestore ainda estão sendo criados ou não foram publicados. Publique os índices de check-ins e diário no Firebase.'
+  }
+
+  if (code === 'auth/operation-not-allowed' && authProvider === 'google') {
+    return 'Ative o provedor Google no Firebase Authentication para entrar com sua conta Google.'
   }
 
   const mensagens = {

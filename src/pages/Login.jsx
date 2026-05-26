@@ -38,7 +38,7 @@ function Login() {
       notify('Login com Google realizado.')
       navigate('/dashboard')
     } catch (err) {
-      setError(traduzirErroFirebase(err))
+      setError(traduzirErroFirebase(err, 'google'))
     } finally {
       setLoading(false)
     }
