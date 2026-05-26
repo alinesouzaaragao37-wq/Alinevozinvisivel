@@ -809,24 +809,47 @@ p {
 
 .auth-page {
   display: grid;
-  min-height: calc(100svh - 74px);
-  padding: 52px 0;
+  min-height: calc(100svh - 57px);
+  padding: clamp(16px, 3vw, 28px) 0;
   place-items: center;
 }
 
 .auth-card {
-  width: min(480px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 42px);
+  width: min(900px, 100%);
+  max-width: 100%;
+  padding: clamp(22px, 3vw, 32px);
   background: rgba(255, 253, 248, 0.96);
 }
 
 .auth-card.wide {
-  width: min(580px, 100%);
+  width: min(980px, 100%);
+}
+
+.auth-intro {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+}
+
+.auth-intro h1 {
+  margin: 10px 0 14px;
+  font-size: clamp(38px, 4.3vw, 53px);
+  line-height: 1.02;
+}
+
+.auth-fields {
+  display: grid;
+  align-content: center;
+  min-width: 0;
 }
 
 label {
   display: grid;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 13px;
   color: var(--ink);
   font-weight: 900;
 }
@@ -837,7 +860,7 @@ textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 14px 15px;
+  padding: 12px 14px;
   color: var(--ink);
   background: #fffefa;
   outline: none;
@@ -873,6 +896,7 @@ textarea {
 }
 
 .auth-switch {
+  margin: 15px 0 0;
   text-align: center;
 }
 
@@ -884,11 +908,11 @@ textarea {
 .auth-card .button.full,
 .checkin-panel .button.full,
 .diary-form .button.full {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .auth-card .button.full + .button.full {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .dashboard-hero {
@@ -1344,7 +1368,10 @@ textarea {
 }
 
 .auth-care-note {
-  margin: 4px 0 22px;
+  margin: 7px 0 0;
+  padding: 12px 14px;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
 }
 
 .chat-prompts {
@@ -1535,6 +1562,25 @@ textarea {
   .admin-grid {
     grid-template-columns: 1fr;
   }
+
+  .auth-card {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .auth-intro,
+  .auth-fields,
+  .auth-care-note,
+  .auth-fields input,
+  .auth-fields .button {
+    max-width: 100%;
+  }
+
+  .auth-intro h1 {
+    font-size: clamp(32px, 10vw, 42px);
+  }
 }
 
 @media (max-width: 520px) {
@@ -1549,7 +1595,7 @@ textarea {
   .panel,
   .auth-card,
   .impact-band {
-    padding: 20px;
+    padding: 18px;
   }
 
   .section-grid,

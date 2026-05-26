@@ -47,50 +47,54 @@ function Login() {
   return (
     <main className="auth-page">
       <form className="auth-card" onSubmit={submit}>
-        <span className="eyebrow">Bem-vindo de volta</span>
-        <h1>Seu espaço espera por você.</h1>
-        <p>Entre para continuar seus registros com privacidade e acolhimento.</p>
-        <div className="auth-care-note">
-          O que você sente importa. Voltar a registrar também é uma forma de se cuidar.
+        <div className="auth-intro">
+          <span className="eyebrow">Bem-vindo de volta</span>
+          <h1>Seu espaço espera por você.</h1>
+          <p>Entre para continuar seus registros com privacidade e acolhimento.</p>
+          <div className="auth-care-note">
+            O que você sente importa. Voltar a registrar também é uma forma de se cuidar.
+          </div>
         </div>
 
-        <label>
-          Email
-          <input
-            type="email"
-            value={form.email}
-            onChange={(event) => update('email', event.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Senha
-          <input
-            type="password"
-            value={form.password}
-            onChange={(event) => update('password', event.target.value)}
-            minLength={6}
-            required
-          />
-        </label>
+        <div className="auth-fields">
+          <label>
+            E-mail
+            <input
+              type="email"
+              value={form.email}
+              onChange={(event) => update('email', event.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Senha
+            <input
+              type="password"
+              value={form.password}
+              onChange={(event) => update('password', event.target.value)}
+              minLength={6}
+              required
+            />
+          </label>
 
-        {error && <p className="form-error">{error}</p>}
+          {error && <p className="form-error">{error}</p>}
 
-        <button className="button primary full" disabled={loading} type="submit">
-          {loading ? 'Entrando...' : 'Entrar'}
-        </button>
-        <button
-          className="button secondary full"
-          disabled={loading}
-          type="button"
-          onClick={googleLogin}
-        >
-          Entrar com Google
-        </button>
+          <button className="button primary full" disabled={loading} type="submit">
+            {loading ? 'Entrando...' : 'Entrar'}
+          </button>
+          <button
+            className="button secondary full"
+            disabled={loading}
+            type="button"
+            onClick={googleLogin}
+          >
+            Entrar com Google
+          </button>
 
-        <p className="auth-switch">
-          Ainda não tem conta? <Link to="/cadastro">Criar cadastro</Link>
-        </p>
+          <p className="auth-switch">
+            Ainda não tem conta? <Link to="/cadastro">Criar cadastro</Link>
+          </p>
+        </div>
       </form>
     </main>
   )

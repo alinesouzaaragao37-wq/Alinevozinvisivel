@@ -38,52 +38,56 @@ function Cadastro() {
   return (
     <main className="auth-page">
       <form className="auth-card wide" onSubmit={submit}>
-        <span className="eyebrow">Comece com calma</span>
-        <h1>Crie seu espaço de cuidado.</h1>
-        <p>
-          Aqui você pode registrar sentimentos, acompanhar sua jornada e buscar
-          apoio com mais clareza.
-        </p>
-        <div className="auth-care-note">
-          Seus registros são pessoais e devem ser tratados com respeito e privacidade.
+        <div className="auth-intro">
+          <span className="eyebrow">Comece com calma</span>
+          <h1>Crie seu espaço de cuidado.</h1>
+          <p>
+            Aqui você pode registrar sentimentos, acompanhar sua jornada e buscar
+            apoio com mais clareza.
+          </p>
+          <div className="auth-care-note">
+            Seus registros são pessoais e devem ser tratados com respeito e privacidade.
+          </div>
         </div>
 
-        <label>
-          Nome
-          <input
-            value={form.name}
-            onChange={(event) => update('name', event.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="email"
-            value={form.email}
-            onChange={(event) => update('email', event.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Senha
-          <input
-            type="password"
-            value={form.password}
-            onChange={(event) => update('password', event.target.value)}
-            minLength={6}
-            required
-          />
-        </label>
-        {error && <p className="form-error">{error}</p>}
+        <div className="auth-fields">
+          <label>
+            Nome
+            <input
+              value={form.name}
+              onChange={(event) => update('name', event.target.value)}
+              required
+            />
+          </label>
+          <label>
+            E-mail
+            <input
+              type="email"
+              value={form.email}
+              onChange={(event) => update('email', event.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Senha
+            <input
+              type="password"
+              value={form.password}
+              onChange={(event) => update('password', event.target.value)}
+              minLength={6}
+              required
+            />
+          </label>
+          {error && <p className="form-error">{error}</p>}
 
-        <button className="button primary full" disabled={loading} type="submit">
-          {loading ? 'Criando...' : 'Criar cadastro'}
-        </button>
+          <button className="button primary full" disabled={loading} type="submit">
+            {loading ? 'Criando...' : 'Criar cadastro'}
+          </button>
 
-        <p className="auth-switch">
-          Já tem conta? <Link to="/login">Entrar</Link>
-        </p>
+          <p className="auth-switch">
+            Já tem conta? <Link to="/login">Entrar</Link>
+          </p>
+        </div>
       </form>
     </main>
   )
