@@ -14,35 +14,35 @@ export function traduzirErroFirebase(error) {
   }
 
   if (code === 'failed-precondition' || message.includes('requires an index')) {
-    return 'Os indices do Firestore ainda estao sendo criados ou nao foram publicados. Publique os indices de check-ins e diario no Firebase.'
+    return 'Os índices do Firestore ainda estão sendo criados ou não foram publicados. Publique os índices de check-ins e diário no Firebase.'
   }
 
   const mensagens = {
-    'auth/email-already-in-use': 'Este email ja esta cadastrado.',
-    'auth/invalid-email': 'Informe um email valido.',
+    'auth/email-already-in-use': 'Este e-mail já está cadastrado.',
+    'auth/invalid-email': 'Informe um e-mail válido.',
     'auth/invalid-credential':
-      'Conta nao encontrada ou senha incorreta. Se este for seu primeiro acesso neste ambiente, crie seu cadastro.',
+      'Conta não encontrada ou senha incorreta. Se este for seu primeiro acesso neste ambiente, crie seu cadastro.',
     'auth/configuration-not-found':
-      'O Firebase Authentication ainda nao esta configurado para este projeto.',
+      'O Firebase Authentication ainda não está configurado para este projeto.',
     'auth/admin-restricted-operation':
-      'O cadastro por email e senha esta bloqueado. Ative o provedor Email/senha no Firebase Authentication.',
+      'O cadastro por e-mail e senha está bloqueado. Ative o provedor E-mail/senha no Firebase Authentication.',
     'auth/operation-not-allowed':
-      'Ative o provedor Email/senha no Firebase Authentication.',
+      'Ative o provedor E-mail/senha no Firebase Authentication.',
     'auth/missing-password': 'Informe uma senha para criar a conta.',
     'auth/weak-password': 'A senha precisa ter pelo menos 6 caracteres.',
-    'auth/api-key-not-valid': 'A chave de API do Firebase esta invalida.',
+    'auth/api-key-not-valid': 'A chave de API do Firebase está inválida.',
     'auth/unauthorized-domain':
-      'Este dominio nao esta autorizado no Firebase Authentication.',
+      'Este domínio não está autorizado no Firebase Authentication.',
     'auth/network-request-failed':
-      'Nao foi possivel conectar ao Firebase. Verifique sua conexao.',
+      'Não foi possível conectar ao Firebase. Verifique sua conexão.',
     'permission-denied':
-      'Permissao negada pelo Firestore. Publique regras de seguranca que permitam esta operacao.',
+      'Permissão negada pelo Firestore. Publique regras de segurança que permitam esta operação.',
     'unavailable':
-      'O Firebase esta temporariamente indisponivel. Tente novamente em instantes.',
+      'O Firebase está temporariamente indisponível. Tente novamente em instantes.',
   }
 
   return (
     mensagens[code] ||
-    `Nao foi possivel concluir a acao. Verifique o Firebase. Codigo: ${code || 'desconhecido'}`
+    `Não foi possível concluir a ação. Verifique o Firebase. Código: ${code || 'desconhecido'}`
   )
 }

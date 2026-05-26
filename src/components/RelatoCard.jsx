@@ -1,14 +1,14 @@
 function RelatoCard({ relato, onStatusChange }) {
   const data = relato.dataCriacao?.toDate
     ? relato.dataCriacao.toDate().toLocaleString('pt-BR')
-    : 'Data indisponivel'
+    : 'Data indisponível'
 
   return (
     <article className={`relato-card risco-${relato.nivelRisco}`}>
       <div className="relato-top">
         <div>
           <span className="eyebrow">Relato recente</span>
-          <h3>{relato.nomeUsuario || 'Cidadao'}</h3>
+          <h3>{relato.nomeUsuario || 'Cidadão'}</h3>
         </div>
         <span className={`risk-pill ${relato.nivelRisco}`}>
           {relato.nivelRisco}

@@ -6,11 +6,11 @@ const functions = app ? getFunctions(app, 'southamerica-east1') : null
 const respondToChat = functions ? httpsCallable(functions, 'respondToChat') : null
 
 const crisisReply =
-  'Sinto muito que isso esteja pesando assim. Sua seguranca vem primeiro agora: procure uma pessoa de confianca que possa ficar com voce, uma unidade de saude ou o servico de emergencia local. No Brasil, voce pode ligar gratuitamente para o CVV no 188, 24 horas por dia.'
+  'Sinto muito que isso esteja pesando assim. Sua segurança vem primeiro agora: procure uma pessoa de confiança que possa ficar com você, uma unidade de saúde ou o serviço de emergência local. No Brasil, você pode ligar gratuitamente para o CVV no 188, 24 horas por dia.'
 
 export async function getChatReply(messages) {
   if (!hasFirebaseConfig || !respondToChat) {
-    throw new Error('O assistente ainda nao esta configurado.')
+    throw new Error('O assistente ainda não está configurado.')
   }
 
   const latest = messages[messages.length - 1]?.text || ''

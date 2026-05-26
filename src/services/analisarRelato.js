@@ -74,20 +74,20 @@ export function analisarRelato(text = '', emotion = 'cansado') {
 
   const messages = {
     baixo:
-      'Obrigado por confiar esse registro a voce mesmo. Perceber o que sente ja e uma forma de cuidado.',
+      'Obrigado por confiar esse registro a você mesmo. Perceber o que sente já é uma forma de cuidado.',
     medio:
-      'Voce nao esta sozinho. O que apareceu no texto merece atencao e pode ficar mais leve quando compartilhado com alguem seguro.',
+      'Você não está sozinho. O que apareceu no texto merece atenção e pode ficar mais leve quando compartilhado com alguém seguro.',
     alto:
-      'Seu relato indica sofrimento importante. Buscar ajuda tambem e um ato de coragem; procure uma pessoa de confianca ou um servico de apoio agora.',
+      'Seu relato indica sofrimento importante. Buscar ajuda também é um ato de coragem; procure uma pessoa de confiança ou um serviço de apoio agora.',
   }
 
   const recommendations = {
     baixo:
-      'Continue acompanhando seus sentimentos e tente repetir o check-in amanha.',
+      'Continue acompanhando seus sentimentos e tente repetir o check-in amanhã.',
     medio:
-      'Considere conversar com familiar, professor, unidade de saude, servico social ou alguem de confianca ainda hoje.',
+      'Considere conversar com familiar, professor, unidade de saúde, serviço social ou alguém de confiança ainda hoje.',
     alto:
-      'Se houver risco imediato, procure emergencia, unidade de saude, CVV 188 no Brasil ou alguem proximo que possa ficar com voce.',
+      'Se houver risco imediato, procure emergência, unidade de saúde, CVV 188 no Brasil ou alguém próximo que possa ficar com você.',
   }
 
   return {

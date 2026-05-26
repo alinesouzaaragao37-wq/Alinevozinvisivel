@@ -21,7 +21,7 @@ function Login() {
     setLoading(true)
     try {
       await loginWithEmail(form.email, form.password)
-      notify('Sessao iniciada com sucesso.')
+      notify('Sessão iniciada com sucesso.')
       navigate('/dashboard')
     } catch (err) {
       setError(traduzirErroFirebase(err))
@@ -48,10 +48,10 @@ function Login() {
     <main className="auth-page">
       <form className="auth-card" onSubmit={submit}>
         <span className="eyebrow">Bem-vindo de volta</span>
-        <h1>Seu espaco espera por voce.</h1>
+        <h1>Seu espaço espera por você.</h1>
         <p>Entre para continuar seus registros com privacidade e acolhimento.</p>
         <div className="auth-care-note">
-          O que voce sente importa. Voltar a registrar tambem e uma forma de se cuidar.
+          O que você sente importa. Voltar a registrar também é uma forma de se cuidar.
         </div>
 
         <label>
@@ -89,7 +89,7 @@ function Login() {
         </button>
 
         <p className="auth-switch">
-          Ainda nao tem conta? <Link to="/cadastro">Criar cadastro</Link>
+          Ainda não tem conta? <Link to="/cadastro">Criar cadastro</Link>
         </p>
       </form>
     </main>

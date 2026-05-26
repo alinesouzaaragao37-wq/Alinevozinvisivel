@@ -12,7 +12,7 @@ function Chatbot() {
   const [messages, setMessages] = useState([
     {
       from: 'bot',
-      text: 'Oi. Eu sou o assistente de acolhimento da Voz Invisivel. Posso te ajudar a organizar o que voce esta sentindo.',
+      text: 'Oi. Eu sou o assistente de acolhimento da Voz Invisível. Posso te ajudar a organizar o que você está sentindo.',
     },
   ])
   const [text, setText] = useState('')
@@ -35,7 +35,7 @@ function Chatbot() {
       setMessages((current) => [...current, { from: 'bot', text: result.reply }])
     } catch {
       setError(
-        'Nao consegui responder agora. Tente novamente em instantes ou procure apoio humano se precisar.',
+        'Não consegui responder agora. Tente novamente em instantes ou procure apoio humano se precisar.',
       )
     } finally {
       setSending(false)
@@ -47,9 +47,9 @@ function Chatbot() {
       <div className="panel-heading">
         <span className="eyebrow">Chat acolhedor</span>
         <h2>Eu estou aqui para te escutar.</h2>
-        <p>Escolha uma frase para comecar ou escreva do seu jeito.</p>
+        <p>Escolha uma frase para começar ou escreva do seu jeito.</p>
       </div>
-      <div className="chat-prompts" aria-label="Sugestoes de conversa">
+      <div className="chat-prompts" aria-label="Sugestões de conversa">
         {prompts.map((prompt) => (
           <button key={prompt.label} onClick={() => setText(prompt.text)} type="button">
             {prompt.label}
@@ -68,7 +68,7 @@ function Chatbot() {
         <input
           value={text}
           onChange={(event) => setText(event.target.value)}
-          placeholder="Conte um pouco do que voce esta sentindo..."
+          placeholder="Conte um pouco do que você está sentindo..."
           disabled={sending}
         />
         <button className="button primary" type="submit" disabled={sending || !text.trim()}>
@@ -77,9 +77,9 @@ function Chatbot() {
       </form>
       {error && <p className="form-error">{error}</p>}
       <p className="chat-help">
-        Suas mensagens sao processadas por inteligencia artificial para responder a conversa.
+        Suas mensagens são processadas por inteligência artificial para responder à conversa.
         Evite compartilhar dados pessoais.{' '}
-        Se voce estiver em risco imediato, busque ajuda presencial agora. No Brasil,
+        Se você estiver em risco imediato, busque ajuda presencial agora. No Brasil,
         o CVV atende gratuitamente pelo 188, 24 horas por dia.
       </p>
     </section>

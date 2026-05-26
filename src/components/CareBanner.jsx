@@ -3,9 +3,9 @@ function CareBanner({ compact = false }) {
     <section className={compact ? 'care-banner compact' : 'care-banner'}>
       <div>
         <span className="eyebrow">Uma pausa com cuidado</span>
-        <h2>Voce nao precisa passar por tudo sozinho.</h2>
+        <h2>Você não precisa passar por tudo sozinho.</h2>
         <p>
-          Registrar o que sente e um primeiro passo. Quando puder, compartilhe
+          Registrar o que sente é um primeiro passo. Quando puder, compartilhe
           esse momento com uma pessoa em quem confia.
         </p>
       </div>
@@ -15,7 +15,7 @@ function CareBanner({ compact = false }) {
         <a href="https://cvv.org.br/ligue-188-3/" rel="noreferrer" target="_blank">
           Ligue 188
         </a>
-        <small>Em risco imediato, procure o servico de emergencia local.</small>
+        <small>Em risco imediato, procure o serviço de emergência local.</small>
       </aside>
     </section>
   )

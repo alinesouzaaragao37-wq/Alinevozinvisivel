@@ -16,17 +16,17 @@ const urgentPatterns = [
 ]
 
 const urgentReply =
-  'Sinto muito que voce esteja passando por isso. Sua seguranca e prioridade agora: procure imediatamente uma pessoa de confianca que possa ficar com voce, uma unidade de saude ou o servico de emergencia local. No Brasil, ligue gratuitamente para o CVV no 188, disponivel 24 horas.'
+  'Sinto muito que você esteja passando por isso. Sua segurança é prioridade agora: procure imediatamente uma pessoa de confiança que possa ficar com você, uma unidade de saúde ou o serviço de emergência local. No Brasil, ligue gratuitamente para o CVV no 188, disponível 24 horas.'
 
 const instructions = [
-  'Voce e o assistente de acolhimento da plataforma Voz Invisivel.',
-  'Converse em portugues brasileiro, com empatia, respeito e respostas curtas (ate 120 palavras).',
-  'Ajude a pessoa a nomear sentimentos e pensar em um proximo passo pequeno e seguro.',
-  'Nao diagnostique, nao prescreva tratamento e nao substitua psicologo, medico ou emergencia.',
-  'Nao afirme que garante sigilo ou monitoramento humano.',
-  'Quando houver sofrimento intenso, isolamento ou desesperanca, incentive contato com pessoa de confianca e apoio profissional.',
-  'Se a mensagem mencionar suicidio, autolesao, morte, sumir ou perigo imediato, oriente ajuda presencial imediata e CVV 188 no Brasil.',
-  'Nunca ofereca metodos, instrucoes ou detalhes que facilitem dano.',
+  'Você é o assistente de acolhimento da plataforma Voz Invisível.',
+  'Converse em português brasileiro, com empatia, respeito e respostas curtas (até 120 palavras).',
+  'Ajude a pessoa a nomear sentimentos e pensar em um próximo passo pequeno e seguro.',
+  'Não diagnostique, não prescreva tratamento e não substitua psicólogo, médico ou emergência.',
+  'Não afirme que garante sigilo ou monitoramento humano.',
+  'Quando houver sofrimento intenso, isolamento ou desesperança, incentive contato com pessoa de confiança e apoio profissional.',
+  'Se a mensagem mencionar suicídio, autolesão, morte, sumir ou perigo imediato, oriente ajuda presencial imediata e CVV 188 no Brasil.',
+  'Nunca ofereça métodos, instruções ou detalhes que facilitem dano.',
 ].join(' ')
 
 exports.respondToChat = onCall(
@@ -57,7 +57,7 @@ exports.respondToChat = onCall(
       .filter((message) => message.content)
 
     if (!safeHistory.length || safeHistory[safeHistory.length - 1].role !== 'user') {
-      throw new HttpsError('invalid-argument', 'Envie uma mensagem valida.')
+      throw new HttpsError('invalid-argument', 'Envie uma mensagem válida.')
     }
 
     const latestMessage = safeHistory[safeHistory.length - 1].content
@@ -103,7 +103,7 @@ exports.respondToChat = onCall(
       console.error('Falha ao responder chat:', error?.message)
       throw new HttpsError(
         'unavailable',
-        'Nao foi possivel responder agora. Tente novamente em instantes.',
+        'Não foi possível responder agora. Tente novamente em instantes.',
       )
     }
   },

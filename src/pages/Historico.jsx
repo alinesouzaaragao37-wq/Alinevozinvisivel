@@ -35,7 +35,7 @@ function Historico() {
     () =>
       [
         ...checkins.map((item) => ({ ...item, type: 'Check-in' })),
-        ...logs.map((item) => ({ ...item, type: 'Diario' })),
+        ...logs.map((item) => ({ ...item, type: 'Diário' })),
       ].sort((a, b) => getTime(b.createdAt) - getTime(a.createdAt)),
     [checkins, logs],
   )
@@ -43,9 +43,9 @@ function Historico() {
   return (
     <main className="app-page">
       <section className="page-heading">
-        <span className="eyebrow">Historico emocional</span>
-        <h1>Sua evolucao recente.</h1>
-        <p>Veja ultimos registros, emocoes mais frequentes e analises da IA.</p>
+        <span className="eyebrow">Histórico emocional</span>
+        <h1>Sua evolução recente.</h1>
+        <p>Veja últimos registros, emoções mais frequentes e análises da IA.</p>
       </section>
 
       {error && <p className="form-error">{error}</p>}
@@ -53,8 +53,8 @@ function Historico() {
       <section className="history-layout">
         <section className="panel">
           <div className="panel-heading">
-            <span className="eyebrow">Grafico simples</span>
-            <h2>Emocoes frequentes</h2>
+            <span className="eyebrow">Gráfico simples</span>
+            <h2>Emoções frequentes</h2>
           </div>
           <EmotionalChart items={checkins} />
         </section>
@@ -62,12 +62,12 @@ function Historico() {
         <section className="panel timeline-panel">
           <div className="panel-heading">
             <span className="eyebrow">Linha do tempo</span>
-            <h2>Ultimos registros</h2>
+            <h2>Últimos registros</h2>
           </div>
           {timeline.length === 0 && (
             <div className="empty-state warm">
-              <strong>Sua jornada pode comecar hoje.</strong>
-              <p>Faca um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.</p>
+              <strong>Sua jornada pode começar hoje.</strong>
+              <p>Faça um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.</p>
             </div>
           )}
           {timeline.map((item) => (

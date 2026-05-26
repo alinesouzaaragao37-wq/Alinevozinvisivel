@@ -8,7 +8,7 @@ function Perfil() {
       <section className="page-heading">
         <span className="eyebrow">Perfil</span>
         <h1>Dados da conta</h1>
-        <p>Informacoes basicas usadas para personalizar a experiencia.</p>
+        <p>Informações básicas usadas para personalizar a experiência.</p>
       </section>
 
       <section className="profile-grid">
@@ -22,10 +22,10 @@ function Perfil() {
         </article>
         <article className="panel">
           <span className="eyebrow">Privacidade</span>
-          <h2>Cuidado com dados sensiveis</h2>
+          <h2>Cuidado com dados sensíveis</h2>
           <p>
-            O MVP separa usuarios, check-ins, relatos e alertas. Regras de
-            seguranca limitam leitura individual aos proprios dados e leitura
+            O MVP separa usuários, check-ins, relatos e alertas. Regras de
+            segurança limitam leitura individual aos próprios dados e leitura
             administrativa a perfis autorizados.
           </p>
         </article>

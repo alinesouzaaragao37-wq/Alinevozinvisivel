@@ -7,22 +7,22 @@ function Home() {
       <section className="platform-hero">
         <div className="hero-orbit">
           <div className="hero-statusbar">
-            <span>Voz Invisivel</span>
-            <strong>Centro de sensibilidade publica</strong>
-            <small>Escuta, prevencao e acolhimento</small>
+            <span>Voz Invisível</span>
+            <strong>Centro de sensibilidade pública</strong>
+            <small>Escuta, prevenção e acolhimento</small>
           </div>
 
           <div className="hero-grid-panel">
             <div className="hero-intro-card">
               <span className="eyebrow">Tecnologia social aplicada</span>
-              <h1>Voz Invisivel</h1>
+              <h1>Voz Invisível</h1>
               <p className="hero-frase">
                 Uma plataforma de IA para transformar relatos emocionais em
-                sinais preventivos, acolhimento e decisao publica responsavel.
+                sinais preventivos, acolhimento e decisão pública responsável.
               </p>
               <p>
                 Jovens registram como se sentem. A plataforma organiza check-ins,
-                diario emocional, historico, alertas e indicadores para equipes
+                diário emocional, histórico, alertas e indicadores para equipes
                 autorizadas agirem com mais sensibilidade.
               </p>
               <div className="hero-actions">
@@ -35,7 +35,7 @@ function Home() {
               </div>
             </div>
 
-            <div className="product-console" aria-label="Previa da jornada de cuidado">
+            <div className="product-console" aria-label="Prévia da jornada de cuidado">
               <div className="console-top">
                 <div>
                   <span>Acolhimento em andamento</span>
@@ -50,7 +50,7 @@ function Home() {
                   <strong>18</strong>
                 </article>
                 <article className="medium">
-                  <span>Medio</span>
+                  <span>Médio</span>
                   <strong>7</strong>
                 </article>
                 <article className="high">
@@ -64,7 +64,7 @@ function Home() {
                   <span>Mensagem acolhedora</span>
                   <p>"Estou cansado emocionalmente e me sentindo sozinho."</p>
                 </div>
-                <strong>voce merece apoio</strong>
+                <strong>você merece apoio</strong>
               </div>
 
               <div className="console-chart">
@@ -82,17 +82,17 @@ function Home() {
             <article>
               <span>01</span>
               <strong>Check-in</strong>
-              <p>Registro emocional diario com intensidade e observacao.</p>
+              <p>Registro emocional diário com intensidade e observação.</p>
             </article>
             <article>
               <span>02</span>
               <strong>IA textual</strong>
-              <p>Palavras-chave geram risco, mensagem e recomendacao.</p>
+              <p>Palavras-chave geram risco, mensagem e recomendação.</p>
             </article>
             <article>
               <span>03</span>
               <strong>Alerta</strong>
-              <p>Sinais medios e altos entram no painel administrativo.</p>
+              <p>Sinais médios e altos entram no painel administrativo.</p>
             </article>
             <article>
               <span>04</span>
@@ -105,26 +105,26 @@ function Home() {
 
       <section className="operating-system">
         <div className="system-copy">
-          <span className="eyebrow">Tecnologia para avaliacao social</span>
+          <span className="eyebrow">Tecnologia para avaliação social</span>
           <h2>Mais que uma tela bonita: uma arquitetura de cuidado.</h2>
           <p>
-            A Voz Invisivel conecta relato, analise, historico e gestao em um
-            fluxo unico. A proposta e demonstrar viabilidade tecnica e impacto
-            social sem prometer diagnostico clinico.
+            A Voz Invisível conecta relato, análise, histórico e gestão em um
+            fluxo único. A proposta é demonstrar viabilidade técnica e impacto
+            social sem prometer diagnóstico clínico.
           </p>
         </div>
         <div className="system-modules">
           <article>
-            <strong>Espaco do jovem</strong>
-            <span>Check-in, diario, chatbot e historico emocional.</span>
+            <strong>Espaço do jovem</strong>
+            <span>Check-in, diário, chatbot e histórico emocional.</span>
           </article>
           <article>
             <strong>Motor preventivo</strong>
-            <span>Classificacao textual transparente e auditavel.</span>
+            <span>Classificação textual transparente e auditável.</span>
           </article>
           <article>
-            <strong>Painel de gestao</strong>
-            <span>Indicadores, alertas e emocoes frequentes.</span>
+            <strong>Painel de gestão</strong>
+            <span>Indicadores, alertas e emoções frequentes.</span>
           </article>
         </div>
       </section>

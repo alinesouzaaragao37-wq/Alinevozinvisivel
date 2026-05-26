@@ -3,10 +3,10 @@ function Sobre() {
     <main className="about-page">
       <section className="page-heading">
         <span className="eyebrow">Proposta</span>
-        <h1>Uma tecnologia para ampliar escuta, nao para substituir cuidado.</h1>
+        <h1>Uma tecnologia para ampliar escuta, não para substituir cuidado.</h1>
         <p>
-          O Projeto Voz Invisivel e um MVP de sensibilidade publica. Ele mostra
-          como relatos espontaneos podem apoiar triagem inicial, leitura de
+          O Projeto Voz Invisível é um MVP de sensibilidade pública. Ele mostra
+          como relatos espontâneos podem apoiar triagem inicial, leitura de
           vulnerabilidades e encaminhamento humanizado.
         </p>
       </section>
@@ -15,24 +15,24 @@ function Sobre() {
         <article>
           <h2>Privacidade</h2>
           <p>
-            As informacoes devem ser acessadas apenas por equipes autorizadas e
-            usadas estritamente para apoio, acolhimento e melhoria de politicas
-            publicas.
+            As informações devem ser acessadas apenas por equipes autorizadas e
+            usadas estritamente para apoio, acolhimento e melhoria de políticas
+            públicas.
           </p>
         </article>
         <article>
           <h2>Responsabilidade</h2>
           <p>
-            A analise deste MVP e simulada. Ela nao emite diagnosticos, nao
-            substitui atendimento profissional e nao deve ser usada de forma
+            A análise deste MVP é simulada. Ela não emite diagnósticos, não
+            substitui atendimento profissional e não deve ser usada de forma
             punitiva.
           </p>
         </article>
         <article>
           <h2>Encaminhamento</h2>
           <p>
-            Em situacao de risco, a prioridade e aproximar a pessoa de apoio
-            humano: familia, escola, saude, assistencia social ou emergencia.
+            Em situação de risco, a prioridade é aproximar a pessoa de apoio
+            humano: família, escola, saúde, assistência social ou emergência.
           </p>
         </article>
       </section>

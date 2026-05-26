@@ -16,9 +16,9 @@ function Navbar() {
 
   return (
     <header className={menuOpen ? 'navbar menu-open' : 'navbar'}>
-      <Link to="/" className="brand" aria-label="Voz Invisivel">
+      <Link to="/" className="brand" aria-label="Voz Invisível">
         <span className="brand-mark">VI</span>
-        <span>Voz Invisivel</span>
+        <span>Voz Invisível</span>
       </Link>
 
       <button
@@ -39,10 +39,10 @@ function Navbar() {
         id="main-navigation"
         onClick={() => setMenuOpen(false)}
       >
-        {user && !isAdmin && <NavLink to="/dashboard">Meu espaco</NavLink>}
-        {user && !isAdmin && <NavLink to="/diario">Diario</NavLink>}
-        {user && !isAdmin && <NavLink to="/historico">Historico</NavLink>}
-        {user && isAdmin && <NavLink to="/admin">Painel de gestao</NavLink>}
+        {user && !isAdmin && <NavLink to="/dashboard">Meu espaço</NavLink>}
+        {user && !isAdmin && <NavLink to="/diario">Diário</NavLink>}
+        {user && !isAdmin && <NavLink to="/historico">Histórico</NavLink>}
+        {user && isAdmin && <NavLink to="/admin">Painel de gestão</NavLink>}
         {user && <NavLink to="/perfil">Perfil</NavLink>}
         {!user ? (
           <>

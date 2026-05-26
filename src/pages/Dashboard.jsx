@@ -21,12 +21,12 @@ const emotions = [
 
 const emotionMessages = {
   feliz: 'Que bom perceber esse momento. Guarde o que ajudou o seu dia a ficar mais leve.',
-  cansado: 'Descansar tambem e cuidado. Voce nao precisa dar conta de tudo hoje.',
-  triste: 'Sentir tristeza nao diminui voce. Obrigado por dar nome ao que esta acontecendo.',
+  cansado: 'Descansar também é cuidado. Você não precisa dar conta de tudo hoje.',
+  triste: 'Sentir tristeza não diminui você. Obrigado por dar nome ao que está acontecendo.',
   ansioso: 'Vamos por partes. Respirar e registrar este momento pode ajudar a trazer um pouco de clareza.',
-  sozinho: 'Sua presenca importa. Se for possivel, aproxime-se de alguem seguro ainda hoje.',
-  motivado: 'Reconhecer sua energia tambem faz parte do cuidado. Celebre este passo.',
-  sobrecarregado: 'Ha muita coisa pesando agora. Escolha uma prioridade pequena e permita-se pedir apoio.',
+  sozinho: 'Sua presença importa. Se for possível, aproxime-se de alguém seguro ainda hoje.',
+  motivado: 'Reconhecer sua energia também faz parte do cuidado. Celebre este passo.',
+  sobrecarregado: 'Há muita coisa pesando agora. Escolha uma prioridade pequena e permita-se pedir apoio.',
 }
 
 function Dashboard() {
@@ -92,7 +92,7 @@ function Dashboard() {
         note,
       })
       setNote('')
-      notify('Check-in registrado. Obrigado por cuidar de voce hoje.')
+      notify('Check-in registrado. Obrigado por cuidar de você hoje.')
     } catch (err) {
       setError(traduzirErroFirebase(err))
     } finally {
@@ -107,21 +107,21 @@ function Dashboard() {
           <span className="eyebrow">Dashboard principal</span>
           <h1>Oi, {profile?.name || user.displayName || 'pessoa acolhida'}.</h1>
           <p>
-            Este e seu espaco de acompanhamento emocional. Registre o agora,
-            observe padroes e use o diario quando precisar elaborar melhor.
+            Este é seu espaço de acompanhamento emocional. Registre o agora,
+            observe padrões e use o diário quando precisar elaborar melhor.
           </p>
         </div>
         <div className="mood-summary">
           <span>Estado atual</span>
           <strong>{latest?.emotion || 'Aguardando check-in'}</strong>
-          <small>{latest ? `Intensidade ${latest.intensity}/10` : 'Comece pelo check-in diario'}</small>
+          <small>{latest ? `Intensidade ${latest.intensity}/10` : 'Comece pelo check-in diário'}</small>
         </div>
       </section>
 
       <section className="stats-grid">
-        <StatCard label="Check-ins" value={checkins.length} detail="ultimos registros" />
-        <StatCard label="Emocao frequente" value={mostFrequentEmotion} detail="baseado no historico" />
-        <StatCard label="Diario" value={logs.length} detail="relatos analisados por IA" />
+        <StatCard label="Check-ins" value={checkins.length} detail="últimos registros" />
+        <StatCard label="Emoção frequente" value={mostFrequentEmotion} detail="baseado no histórico" />
+        <StatCard label="Diário" value={logs.length} detail="relatos analisados por IA" />
         <StatCard label="Alertas altos" value={highRiskCount} detail="sinais preventivos" tone="danger" />
       </section>
 
@@ -130,8 +130,8 @@ function Dashboard() {
       <section className="dashboard-grid">
         <form className="panel checkin-panel" onSubmit={submitCheckin}>
           <div className="panel-heading">
-            <span className="eyebrow">Check-in diario</span>
-            <h2>Como voce esta hoje?</h2>
+            <span className="eyebrow">Check-in diário</span>
+            <h2>Como você está hoje?</h2>
           </div>
           <div className="emotion-picker">
             {emotions.map((emotion) => (
@@ -162,7 +162,7 @@ function Dashboard() {
             <small>{intensity}/10</small>
           </label>
           <label>
-            Observacao opcional
+            Observação opcional
             <textarea
               value={note}
               onChange={(event) => setNote(event.target.value)}
@@ -177,8 +177,8 @@ function Dashboard() {
 
         <section className="panel">
           <div className="panel-heading">
-            <span className="eyebrow">Evolucao emocional</span>
-            <h2>Frequencia recente</h2>
+            <span className="eyebrow">Evolução emocional</span>
+            <h2>Frequência recente</h2>
           </div>
           <EmotionalChart items={checkins} />
         </section>

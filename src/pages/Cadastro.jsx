@@ -26,7 +26,7 @@ function Cadastro() {
 
     try {
       await registerWithEmail(form)
-      notify('Cadastro criado. Bem-vindo a Voz Invisivel.')
+      notify('Cadastro criado. Bem-vindo à Voz Invisível.')
       navigate('/dashboard')
     } catch (err) {
       setError(traduzirErroFirebase(err))
@@ -39,13 +39,13 @@ function Cadastro() {
     <main className="auth-page">
       <form className="auth-card wide" onSubmit={submit}>
         <span className="eyebrow">Comece com calma</span>
-        <h1>Crie seu espaco de cuidado.</h1>
+        <h1>Crie seu espaço de cuidado.</h1>
         <p>
-          Aqui voce pode registrar sentimentos, acompanhar sua jornada e buscar
+          Aqui você pode registrar sentimentos, acompanhar sua jornada e buscar
           apoio com mais clareza.
         </p>
         <div className="auth-care-note">
-          Seus registros sao pessoais e devem ser tratados com respeito e privacidade.
+          Seus registros são pessoais e devem ser tratados com respeito e privacidade.
         </div>
 
         <label>
@@ -82,7 +82,7 @@ function Cadastro() {
         </button>
 
         <p className="auth-switch">
-          Ja tem conta? <Link to="/login">Entrar</Link>
+          Já tem conta? <Link to="/login">Entrar</Link>
         </p>
       </form>
     </main>

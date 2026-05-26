@@ -21,7 +21,7 @@ function Cidadao({ usuario, perfil }) {
     const analise = analisarRelato(texto, humor)
 
     if (!hasFirebaseConfig || !db) {
-      setErro('Analise gerada em modo demonstracao. Configure o Firebase para salvar.')
+      setErro('Análise gerada em modo demonstração. Configure o Firebase para salvar.')
       setResultado(analise)
       setTexto('')
       setHumor('neutro')
@@ -32,7 +32,7 @@ function Cidadao({ usuario, perfil }) {
     try {
       await addDoc(collection(db, 'relatos'), {
         uid: usuario.uid,
-        nomeUsuario: perfil?.nome || usuario.displayName || 'Cidadao',
+        nomeUsuario: perfil?.nome || usuario.displayName || 'Cidadão',
         texto,
         humor,
         nivelRisco: analise.nivelRisco,
@@ -58,8 +58,8 @@ function Cidadao({ usuario, perfil }) {
   return (
     <main className="citizen-page">
       <section className="page-heading">
-        <span className="eyebrow">Espaco de escuta</span>
-        <h1>Como voce esta se sentindo hoje?</h1>
+        <span className="eyebrow">Espaço de escuta</span>
+        <h1>Como você está se sentindo hoje?</h1>
         <p>
           Escreva com suas palavras. O sistema faz uma triagem inicial e orienta
           caminhos de apoio sem substituir atendimento profissional.
@@ -75,7 +75,7 @@ function Cidadao({ usuario, perfil }) {
               onChange={(event) => setTexto(event.target.value)}
               minLength={12}
               required
-              placeholder="Conte brevemente o que voce esta sentindo..."
+              placeholder="Conte brevemente o que você está sentindo..."
             />
           </label>
 
@@ -98,15 +98,15 @@ function Cidadao({ usuario, perfil }) {
         </form>
 
         <aside className="support-card">
-          <h2>Orientacao segura</h2>
+          <h2>Orientação segura</h2>
           <p>
-            Seus dados devem ser usados apenas para apoio e triagem. Se voce
-            estiver em perigo imediato, procure ajuda urgente, servicos locais de
-            emergencia ou alguem de confianca agora.
+            Seus dados devem ser usados apenas para apoio e triagem. Se você
+            estiver em perigo imediato, procure ajuda urgente, serviços locais de
+            emergência ou alguém de confiança agora.
           </p>
           <p>
             Acolhimento humano importa. Uma conversa com um familiar, professor,
-            amigo, unidade de saude ou servico social pode ser o primeiro passo.
+            amigo, unidade de saúde ou serviço social pode ser o primeiro passo.
           </p>
         </aside>
       </section>

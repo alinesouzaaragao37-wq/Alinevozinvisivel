@@ -6,6 +6,7 @@ import { useToast } from '../hooks/useToast'
 import { saveDiaryEntry } from '../services/emotionalService'
 
 const emotions = ['feliz', 'cansado', 'triste', 'ansioso', 'sozinho', 'motivado', 'sobrecarregado']
+const riskLabels = { baixo: 'baixo', medio: 'médio', alto: 'alto' }
 
 function Diario() {
   const { user, profile, firestoreError } = useAuth()
@@ -27,7 +28,7 @@ function Diario() {
       const saved = await saveDiaryEntry({ user, profile, text, emotion })
       setResult(saved.analysis)
       setText('')
-      notify('Relato analisado e salvo com seguranca.')
+      notify('Relato analisado e salvo com segurança.')
     } catch (err) {
       setError(traduzirErroFirebase(err))
     } finally {
@@ -38,11 +39,11 @@ function Diario() {
   return (
     <main className="app-page">
       <section className="page-heading">
-        <span className="eyebrow">Diario emocional</span>
+        <span className="eyebrow">Diário emocional</span>
         <h1>Escreva com suas palavras.</h1>
         <p>
           A IA textual procura sinais preventivos e devolve uma mensagem de
-          acolhimento. Esta analise nao substitui atendimento profissional.
+          acolhimento. Esta análise não substitui atendimento profissional.
         </p>
       </section>
 
@@ -51,11 +52,11 @@ function Diario() {
       <section className="diary-layout">
         <form className="panel diary-form" onSubmit={submit}>
           <p className="form-intro">
-            Este espaco e seu. Escreva no seu ritmo; nao ha jeito certo de
+            Este espaço é seu. Escreva no seu ritmo; não há jeito certo de
             explicar um sentimento.
           </p>
           <label>
-            Emocao principal
+            Emoção principal
             <select value={emotion} onChange={(event) => setEmotion(event.target.value)}>
               {emotions.map((item) => (
                 <option key={item} value={item}>
@@ -82,15 +83,15 @@ function Diario() {
 
         <aside className="panel ai-panel">
           <span className="eyebrow">Devolutiva cuidadosa</span>
-          <h2>Uma leitura para apoiar seus proximos passos</h2>
+          <h2>Uma leitura para apoiar seus próximos passos</h2>
           <p>
             O motor local avalia palavras-chave como sozinho, cansado,
             ansiedade, vazio, desaparecer e desistir. Depois soma o contexto da
-            emocao escolhida e classifica o risco em baixo, medio ou alto.
+            emoção escolhida e classifica o risco em baixo, médio ou alto.
           </p>
           {result && (
             <div className={`analysis-card ${result.risk}`}>
-              <span>Risco {result.risk}</span>
+              <span>Risco {riskLabels[result.risk] || result.risk}</span>
               <h3>{result.supportiveMessage}</h3>
               <p>{result.recommendation}</p>
               {result.detectedWords.length > 0 && (

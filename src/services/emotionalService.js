@@ -16,7 +16,7 @@ import { analisarRelato } from './analisarRelato'
 
 function requireDb() {
   if (!hasFirebaseConfig || !db) {
-    throw new Error('Firestore nao configurado. Verifique as variaveis VITE_FIREBASE_*.')
+    throw new Error('Firestore não configurado. Verifique as variáveis VITE_FIREBASE_*.')
   }
 }
 

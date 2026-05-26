@@ -9,6 +9,8 @@ import {
   updateAlertStatus,
 } from '../services/emotionalService'
 
+const riskLabels = { baixo: 'baixo', medio: 'médio', alto: 'alto' }
+
 function Admin() {
   const { profile } = useAuth()
   const [logs, setLogs] = useState([])
@@ -72,12 +74,12 @@ function Admin() {
           <h1>
             {profile?.role === 'profissional'
               ? 'Acompanhamento profissional.'
-              : 'Indicadores para decisao sensivel.'}
+              : 'Indicadores para decisão sensível.'}
           </h1>
           <p>
             {profile?.role === 'profissional'
-              ? 'Visualize alertas emocionais e registros que exigem acolhimento responsavel.'
-              : 'Visualize volume de usuarios, registros emocionais, emocoes mais frequentes e alertas preventivos.'}
+              ? 'Visualize alertas emocionais e registros que exigem acolhimento responsável.'
+              : 'Visualize volume de usuários, registros emocionais, emoções mais frequentes e alertas preventivos.'}
           </p>
         </div>
       </section>
@@ -85,7 +87,7 @@ function Admin() {
       {error && <p className="form-error">{error}</p>}
 
       <section className="stats-grid">
-        <StatCard label="Usuarios" value={usersCount} detail="contas criadas" />
+        <StatCard label="Usuários" value={usersCount} detail="contas criadas" />
         <StatCard label="Check-ins" value={checkins.length} detail="registros emocionais" />
         <StatCard label="Relatos" value={logs.length} detail="analisados por IA" />
         <StatCard label="Alertas" value={alerts.length} detail={emotionTop} tone="warning" />
@@ -95,7 +97,7 @@ function Admin() {
         <section className="panel">
           <div className="panel-heading">
             <span className="eyebrow">Mapa emocional</span>
-            <h2>Emocoes mais registradas</h2>
+            <h2>Emoções mais registradas</h2>
           </div>
           <EmotionalChart items={checkins} />
         </section>
@@ -109,9 +111,9 @@ function Admin() {
           {alerts.map((alert) => (
             <article className={`alert-item ${alert.risk}`} key={alert.id}>
               <div>
-                <span>Risco {alert.risk}</span>
+                <span>Risco {riskLabels[alert.risk] || alert.risk}</span>
                 <h3>{alert.userName}</h3>
-                <p>{alert.detectedWords?.join(', ') || 'Sem palavra especifica'}</p>
+                <p>{alert.detectedWords?.join(', ') || 'Sem palavra específica'}</p>
               </div>
               <button
                 className="button secondary small"
