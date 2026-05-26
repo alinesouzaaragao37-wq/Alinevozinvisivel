@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CareBanner from '../components/CareBanner'
+import { cloudFirestoreEnabled } from '../firebase/config'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../hooks/useToast'
@@ -48,6 +49,12 @@ function Diario() {
       </section>
 
       <CareBanner compact />
+
+      {!cloudFirestoreEnabled && (
+        <p className="notice">
+          Modo local ativo: este relato fica somente neste navegador até o banco seguro ser ativado.
+        </p>
+      )}
 
       <section className="diary-layout">
         <form className="panel diary-form" onSubmit={submit}>

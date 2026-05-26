@@ -60,6 +60,7 @@ VITE_FIREBASE_PROJECT_ID=...
 VITE_FIREBASE_STORAGE_BUCKET=...
 VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=...
+VITE_FIREBASE_USE_FIRESTORE=true
 ```
 
 6. Publique as regras:
@@ -69,6 +70,11 @@ firebase login
 firebase use --add
 firebase deploy --only firestore:rules,firestore:indexes
 ```
+
+Enquanto o banco ainda não tiver sido criado, mantenha
+`VITE_FIREBASE_USE_FIRESTORE=false`. Nesse modo, autenticação continua no
+Firebase e os registros ficam somente no navegador, sem sincronização em
+nuvem. Depois de criar o Firestore e publicar as regras, altere para `true`.
 
 ## Configurar chatbot com IA real
 

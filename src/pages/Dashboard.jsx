@@ -4,6 +4,7 @@ import Chatbot from '../components/Chatbot'
 import CareBanner from '../components/CareBanner'
 import EmotionalChart from '../components/EmotionalChart'
 import StatCard from '../components/StatCard'
+import { cloudFirestoreEnabled } from '../firebase/config'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useAuth } from '../hooks/useAuth'
 import { useToast } from '../hooks/useToast'
@@ -126,6 +127,12 @@ function Dashboard() {
       </section>
 
       <CareBanner compact />
+
+      {!cloudFirestoreEnabled && (
+        <p className="notice">
+          Modo local ativo: seus registros ficam somente neste navegador até o banco seguro ser ativado.
+        </p>
+      )}
 
       <section className="dashboard-grid">
         <form className="panel checkin-panel" onSubmit={submitCheckin}>

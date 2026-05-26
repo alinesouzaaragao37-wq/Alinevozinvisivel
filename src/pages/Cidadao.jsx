@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db, hasFirebaseConfig } from '../firebase/config'
+import { cloudFirestoreEnabled, db } from '../firebase/config'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { analisarRelato } from '../services/analisarRelato'
 
@@ -20,8 +20,18 @@ function Cidadao({ usuario, perfil }) {
 
     const analise = analisarRelato(texto, humor)
 
-    if (!hasFirebaseConfig || !db) {
-      setErro('Análise gerada em modo demonstração. Configure o Firebase para salvar.')
+    if (!cloudFirestoreEnabled) {
+      const relato = {
+        id: crypto.randomUUID(),
+        uid: usuario.uid,
+        nomeUsuario: perfil?.nome || usuario.displayName || 'Cidadão',
+        texto,
+        humor,
+        analise,
+        dataCriacao: new Date().toISOString(),
+      }
+      const relatos = JSON.parse(localStorage.getItem('voz-invisivel.local.relatos') || '[]')
+      localStorage.setItem('voz-invisivel.local.relatos', JSON.stringify([relato, ...relatos]))
       setResultado(analise)
       setTexto('')
       setHumor('neutro')
@@ -68,6 +78,9 @@ function Cidadao({ usuario, perfil }) {
 
       <section className="citizen-layout">
         <form className="relato-form" onSubmit={enviarRelato}>
+          {!cloudFirestoreEnabled && (
+            <p className="notice">Modo local ativo: este relato fica somente neste navegador.</p>
+          )}
           <label>
             Seu relato
             <textarea

@@ -1,8 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
-import { auth, db, hasFirebaseConfig } from '../firebase/config'
+import { auth, cloudFirestoreEnabled, db, hasFirebaseConfig } from '../firebase/config'
 import { AuthContext } from './authContextValue'
+
+function buildLocalProfile(currentUser) {
+  return {
+    uid: currentUser.uid,
+    name: currentUser.displayName || 'Pessoa acolhida',
+    email: currentUser.email,
+    role: 'jovem',
+  }
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -11,7 +20,7 @@ export function AuthProvider({ children }) {
   const [firestoreError, setFirestoreError] = useState(null)
 
   useEffect(() => {
-    if (!hasFirebaseConfig || !auth || !db) {
+    if (!hasFirebaseConfig || !auth) {
       return undefined
     }
 
@@ -21,6 +30,15 @@ export function AuthProvider({ children }) {
       if (!currentUser) {
         setProfile(null)
         setFirestoreError(null)
+        setLoading(false)
+        return
+      }
+
+      if (!cloudFirestoreEnabled || !db) {
+        const localProfile = buildLocalProfile(currentUser)
+        localStorage.setItem(`voz-invisivel.profile.${currentUser.uid}`, JSON.stringify(localProfile))
+        setFirestoreError(null)
+        setProfile(localProfile)
         setLoading(false)
         return
       }
@@ -51,12 +69,7 @@ export function AuthProvider({ children }) {
         )
       } catch (error) {
         setFirestoreError(error)
-        setProfile({
-          uid: currentUser.uid,
-          name: currentUser.displayName || 'Pessoa acolhida',
-          email: currentUser.email,
-          role: 'jovem',
-        })
+        setProfile(buildLocalProfile(currentUser))
       }
       setLoading(false)
     })

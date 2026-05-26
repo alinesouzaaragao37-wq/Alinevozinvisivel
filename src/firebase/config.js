@@ -24,4 +24,6 @@ export const hasFirebaseConfig = Object.values(firebaseConfig).every(
 export const app = hasFirebaseConfig ? initializeApp(firebaseConfig) : null
 
 export const auth = app ? getAuth(app) : null
-export const db = app ? getFirestore(app) : null
+export const cloudFirestoreEnabled =
+  hasFirebaseConfig && import.meta.env.VITE_FIREBASE_USE_FIRESTORE === 'true'
+export const db = app && cloudFirestoreEnabled ? getFirestore(app) : null

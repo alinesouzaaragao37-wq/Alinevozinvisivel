@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import EmotionalChart from '../components/EmotionalChart'
+import { cloudFirestoreEnabled } from '../firebase/config'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useAuth } from '../hooks/useAuth'
 import { listenUserCheckins, listenUserLogs } from '../services/emotionalService'
@@ -49,6 +50,11 @@ function Historico() {
       </section>
 
       {error && <p className="form-error">{error}</p>}
+      {!cloudFirestoreEnabled && (
+        <p className="notice">
+          Modo local ativo: este histórico reúne os registros salvos neste navegador.
+        </p>
+      )}
 
       <section className="history-layout">
         <section className="panel">
@@ -85,17 +91,18 @@ function Historico() {
 }
 
 function getTime(date) {
-  return date?.toDate ? date.toDate().getTime() : 0
+  return date?.toDate ? date.toDate().getTime() : new Date(date || 0).getTime()
 }
 
 function formatDate(date) {
-  if (!date?.toDate) return 'Agora'
+  const value = date?.toDate ? date.toDate() : new Date(date)
+  if (Number.isNaN(value.getTime())) return 'Agora'
   return new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
     month: 'short',
     hour: '2-digit',
     minute: '2-digit',
-  }).format(date.toDate())
+  }).format(value)
 }
 
 export default Historico
