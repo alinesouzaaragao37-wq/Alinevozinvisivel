@@ -31,11 +31,41 @@ service cloud.firestore {
       return hasUserProfile() && userProfile().role == 'admin';
     }
 
+    function validEmotion(emotion) {
+      return emotion in [
+        'feliz',
+        'cansado',
+        'triste',
+        'ansioso',
+        'sozinho',
+        'motivado',
+        'sobrecarregado'
+      ];
+    }
+
+    function validRisk(risk) {
+      return risk in ['baixo', 'medio', 'alto'];
+    }
+
+    function validStatus(status) {
+      return status in ['novo', 'em_acompanhamento', 'acolhido'];
+    }
+
     function validUserCreate(userId) {
       return isSelf(userId)
+        && request.resource.data.keys().hasAll([
+          'uid', 'name', 'email', 'role', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'name', 'email', 'role', 'createdAt', 'updatedAt'
+        ])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.email == request.auth.token.email
-        && request.resource.data.role == 'jovem';
+        && request.resource.data.role == 'jovem'
+        && request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
     }
 
     function validOwnerCreate() {
@@ -56,12 +86,18 @@ service cloud.firestore {
       allow get: if isSelf(userId) || isStaff();
       allow list: if isStaff();
 
-      allow update: if isSelf(userId)
-        && request.resource.data.uid == resource.data.uid
-        && request.resource.data.email == resource.data.email
-        && (
-          request.resource.data.role == resource.data.role
-          || isAdmin()
+      allow update: if (
+        isSelf(userId)
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['name', 'updatedAt'])
+          && request.resource.data.name is string
+          && request.resource.data.updatedAt is timestamp
+        ) || (
+          isAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['role', 'updatedAt'])
+          && request.resource.data.role in ['jovem', 'profissional', 'gestor', 'admin']
+          && request.resource.data.updatedAt is timestamp
         );
 
       allow delete: if false;
@@ -69,42 +105,72 @@ service cloud.firestore {
 
     match /checkins/{checkinId} {
       allow create: if validOwnerCreate()
-        && request.resource.data.emotion in [
-          'feliz',
-          'cansado',
-          'triste',
-          'ansioso',
-          'sozinho',
-          'motivado',
-          'sobrecarregado'
-        ]
+        && request.resource.data.keys().hasAll([
+          'userId', 'userName', 'emotion', 'intensity', 'note', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'userId', 'userName', 'emotion', 'intensity', 'note', 'createdAt'
+        ])
+        && request.resource.data.userName is string
+        && validEmotion(request.resource.data.emotion)
         && request.resource.data.intensity is number
         && request.resource.data.intensity >= 1
-        && request.resource.data.intensity <= 10;
+        && request.resource.data.intensity <= 10
+        && request.resource.data.note is string
+        && request.resource.data.createdAt is timestamp;
 
       allow get, list: if ownsResource() || isStaff();
 
       allow update: if ownsResource()
         && request.resource.data.diff(resource.data).affectedKeys()
           .hasOnly(['emotion', 'intensity', 'note', 'updatedAt'])
-        && request.resource.data.emotion in [
-          'feliz',
-          'cansado',
-          'triste',
-          'ansioso',
-          'sozinho',
-          'motivado',
-          'sobrecarregado'
-        ]
+        && validEmotion(request.resource.data.emotion)
         && request.resource.data.intensity is number
         && request.resource.data.intensity >= 1
-        && request.resource.data.intensity <= 10;
+        && request.resource.data.intensity <= 10
+        && request.resource.data.note is string
+        && request.resource.data.updatedAt is timestamp;
       allow delete: if ownsResource();
     }
 
     match /emotionalLogs/{logId} {
       allow create: if validOwnerCreate()
-        && request.resource.data.risk in ['baixo', 'medio', 'alto'];
+        && request.resource.data.keys().hasAll([
+          'userId',
+          'userName',
+          'text',
+          'emotion',
+          'risk',
+          'score',
+          'detectedWords',
+          'supportiveMessage',
+          'recommendation',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'userId',
+          'userName',
+          'text',
+          'emotion',
+          'risk',
+          'score',
+          'detectedWords',
+          'supportiveMessage',
+          'recommendation',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.userName is string
+        && request.resource.data.text is string
+        && validEmotion(request.resource.data.emotion)
+        && validRisk(request.resource.data.risk)
+        && request.resource.data.score is number
+        && request.resource.data.detectedWords is list
+        && request.resource.data.supportiveMessage is string
+        && request.resource.data.recommendation is string
+        && request.resource.data.status == 'novo'
+        && request.resource.data.createdAt is timestamp;
 
       allow get, list: if ownsResource() || isStaff();
 
@@ -112,7 +178,8 @@ service cloud.firestore {
         isStaff()
           && request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['status', 'updatedAt'])
-          && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido']
+          && validStatus(request.resource.data.status)
+          && request.resource.data.updatedAt is timestamp
         ) || (
           ownsResource()
           && request.resource.data.diff(resource.data).affectedKeys()
@@ -126,7 +193,14 @@ service cloud.firestore {
               'recommendation',
               'updatedAt'
             ])
-          && request.resource.data.risk in ['baixo', 'medio', 'alto']
+          && request.resource.data.text is string
+          && validEmotion(request.resource.data.emotion)
+          && validRisk(request.resource.data.risk)
+          && request.resource.data.score is number
+          && request.resource.data.detectedWords is list
+          && request.resource.data.supportiveMessage is string
+          && request.resource.data.recommendation is string
+          && request.resource.data.updatedAt is timestamp
         );
 
       allow delete: if ownsResource() || isAdmin();
@@ -134,7 +208,33 @@ service cloud.firestore {
 
     match /alerts/{alertId} {
       allow create: if validOwnerCreate()
-        && request.resource.data.risk in ['medio', 'alto'];
+        && request.resource.data.keys().hasAll([
+          'logId',
+          'userId',
+          'userName',
+          'risk',
+          'score',
+          'detectedWords',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'logId',
+          'userId',
+          'userName',
+          'risk',
+          'score',
+          'detectedWords',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.logId is string
+        && request.resource.data.userName is string
+        && request.resource.data.risk in ['medio', 'alto']
+        && request.resource.data.score is number
+        && request.resource.data.detectedWords is list
+        && request.resource.data.status == 'novo'
+        && request.resource.data.createdAt is timestamp;
 
       allow get, list: if ownsResource() || isStaff();
 
@@ -142,12 +242,16 @@ service cloud.firestore {
         isStaff()
           && request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['status', 'updatedAt'])
-          && request.resource.data.status in ['novo', 'em_acompanhamento', 'acolhido']
+          && validStatus(request.resource.data.status)
+          && request.resource.data.updatedAt is timestamp
         ) || (
           ownsResource()
           && request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['risk', 'score', 'detectedWords', 'updatedAt'])
           && request.resource.data.risk in ['medio', 'alto']
+          && request.resource.data.score is number
+          && request.resource.data.detectedWords is list
+          && request.resource.data.updatedAt is timestamp
         );
       allow delete: if ownsResource() || isAdmin();
     }
@@ -161,7 +265,11 @@ service cloud.firestore {
 
       allow get, list: if ownsResource() || isStaff();
 
-      allow update: if ownsResource() || isStaff();
+      allow update: if isStaff()
+        || (
+          ownsResource()
+          && request.resource.data.userId == resource.data.userId
+        );
       allow delete: if ownsResource() || isAdmin();
     }
 
@@ -204,8 +312,12 @@ service cloud.firestore {
       allow get: if ownsLegacyResource() || isStaff();
       allow list: if isStaff();
 
-      allow update: if isStaff() || ownsLegacyResource();
-      allow delete: if isAdmin();
+      allow update: if isStaff()
+        || (
+          ownsLegacyResource()
+          && request.resource.data.uid == resource.data.uid
+        );
+      allow delete: if ownsLegacyResource() || isAdmin();
     }
 
     match /{document=**} {
