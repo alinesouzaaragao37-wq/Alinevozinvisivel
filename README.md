@@ -1,28 +1,28 @@
-# Voz Invisivel
+# Voz Invisível
 
-MVP full stack em React, Vite e Firebase para sensibilidade publica, acolhimento emocional e prevencao social. O projeto foi pensado para o programa **Do Piaui para o Mundo**, eixo **Novas Tecnologias para Cidadaos, Industrias e Governos**.
+MVP full stack em React, Vite e Firebase para sensibilidade pública, acolhimento emocional e prevenção social. O projeto foi pensado para o programa **Do Piauí para o Mundo**, eixo **Novas Tecnologias para Cidadãos, Indústrias e Governos**.
 
 ## Problema que enfrentamos
 
-Muitos jovens passam por ansiedade, isolamento, sobrecarga emocional ou pensamentos de desistir sem encontrar um canal simples e reservado para registrar o que estao sentindo. Quando os sinais aparecem apenas em conversas informais ou quando a situacao ja se agravou, escolas, familias e redes de apoio perdem tempo valioso para acolher e orientar.
+Muitos jovens passam por ansiedade, isolamento, sobrecarga emocional ou pensamentos de desistir sem encontrar um canal simples e reservado para registrar o que estão sentindo. Quando os sinais aparecem apenas em conversas informais ou quando a situação já se agravou, escolas, famílias e redes de apoio perdem tempo valioso para acolher e orientar.
 
-O problema nao e substituir atendimento profissional por tecnologia. E reduzir o silencio entre o primeiro sinal de sofrimento e a chegada de ajuda humana qualificada. Para isso, e necessario oferecer escuta inicial acessivel, acompanhar mudancas emocionais ao longo do tempo e destacar situacoes que merecem atencao responsavel.
+O problema não é substituir atendimento profissional por tecnologia. É reduzir o silêncio entre o primeiro sinal de sofrimento e a chegada de ajuda humana qualificada. Para isso, é necessário oferecer escuta inicial acessível, acompanhar mudanças emocionais ao longo do tempo e destacar situações que merecem atenção responsável.
 
-O **Voz Invisivel** nasce para apoiar esse percurso: a pessoa pode registrar emocao e relatos em ambiente protegido, receber orientacao acolhedora e permitir que profissionais ou gestores autorizados observem alertas preventivos, sempre respeitando privacidade e limites eticos.
+O **Voz Invisível** nasce para apoiar esse percurso: a pessoa pode registrar emoção e relatos em ambiente protegido, receber orientação acolhedora e permitir que profissionais ou gestores autorizados observem alertas preventivos, sempre respeitando privacidade e limites éticos.
 
 ## O que o MVP entrega
 
 - Home moderna com proposta de impacto social.
-- Cadastro, login, login com Google, logout e persistencia de sessao via Firebase Authentication.
-- Dashboard do jovem com check-in emocional diario.
-- Diario emocional com IA textual simples baseada em palavras-chave.
-- Classificacao preventiva de risco: baixo, medio e alto.
+- Cadastro, login, login com Google, logout e persistência de sessão via Firebase Authentication.
+- Dashboard do jovem com check-in emocional diário.
+- Diário emocional com IA textual simples baseada em palavras-chave.
+- Classificação preventiva de risco: baixo, médio e alto.
 - Chatbot acolhedor com respostas reais geradas por IA em backend protegido.
-- Historico com ultimos registros, emocoes frequentes e grafico simples.
-- Perfil do usuario.
-- Painel administrativo com usuarios, check-ins, relatos, emocoes frequentes e alertas.
+- Histórico com últimos registros, emoções frequentes e gráfico simples.
+- Perfil do usuário.
+- Painel administrativo com usuários, check-ins, relatos, emoções frequentes e alertas.
 - Firestore organizado em `users`, `checkins`, `emotionalLogs` e `alerts`.
-- Rotas protegidas, loading screen, notificacoes e layout responsivo.
+- Rotas protegidas, loading screen, notificações e layout responsivo.
 
 ## Instalar e rodar
 
@@ -31,7 +31,7 @@ npm install
 npm run dev
 ```
 
-Build de producao:
+Build de produção:
 
 ```bash
 npm run build
@@ -51,7 +51,7 @@ npm.cmd run build
 2. Ative **Authentication** com os provedores **Email/senha** e **Google**.
 3. Crie um **Cloud Firestore Database**.
 4. Copie `.env.example` para `.env`.
-5. Preencha as variaveis:
+5. Preencha as variáveis:
 
 ```env
 VITE_FIREBASE_API_KEY=...
@@ -72,10 +72,10 @@ firebase deploy --only firestore:rules,firestore:indexes
 
 ## Configurar chatbot com IA real
 
-O chatbot usa uma **Firebase Cloud Function** para manter a chave da OpenAI fora do navegador. A conversa exige usuario autenticado e contem protecao imediata local e moderacao de mensagens relacionadas a autolesao antes de gerar respostas.
+O chatbot usa uma **Firebase Cloud Function** para manter a chave da OpenAI fora do navegador. A conversa exige usuário autenticado e contém proteção imediata local e moderação de mensagens relacionadas a autolesão antes de gerar respostas.
 
-1. No projeto Firebase `voz-invisivel-1e5f9`, habilite Cloud Functions. A publicacao de funcoes normalmente requer o plano Blaze.
-2. Instale as dependencias do backend:
+1. No projeto Firebase `voz-invisivel-1e5f9`, habilite Cloud Functions. A publicação de funções normalmente requer o plano Blaze.
+2. Instale as dependências do backend:
 
 ```bash
 npm install --prefix functions
@@ -87,19 +87,19 @@ npm install --prefix functions
 firebase functions:secrets:set OPENAI_API_KEY --project voz-invisivel-1e5f9
 ```
 
-4. Publique a funcao:
+4. Publique a função:
 
 ```bash
 firebase deploy --only functions:respondToChat --project voz-invisivel-1e5f9
 ```
 
-O modelo padrao e `gpt-5-mini`; ele pode ser alterado no parametro `OPENAI_CHAT_MODEL` durante a publicacao. Nunca coloque `OPENAI_API_KEY` no arquivo `.env` do frontend.
+O modelo padrão é `gpt-5-mini`; ele pode ser alterado no parâmetro `OPENAI_CHAT_MODEL` durante a publicação. Nunca coloque `OPENAI_API_KEY` no arquivo `.env` do frontend.
 
 ## Estrutura Firestore
 
 ### `users`
 
-Perfil basico do usuario autenticado.
+Perfil básico do usuário autenticado.
 
 ```js
 {
@@ -114,7 +114,7 @@ Perfil basico do usuario autenticado.
 
 ### `checkins`
 
-Check-ins emocionais diarios.
+Check-ins emocionais diários.
 
 ```js
 {
@@ -129,7 +129,7 @@ Check-ins emocionais diarios.
 
 ### `emotionalLogs`
 
-Relatos livres do diario emocional com resultado da IA textual.
+Relatos livres do diário emocional com resultado da IA textual.
 
 ```js
 {
@@ -149,7 +149,7 @@ Relatos livres do diario emocional com resultado da IA textual.
 
 ### `alerts`
 
-Alertas criados automaticamente quando o risco e medio ou alto.
+Alertas criados automaticamente quando o risco é médio ou alto.
 
 ```js
 {
@@ -164,11 +164,11 @@ Alertas criados automaticamente quando o risco e medio ou alto.
 }
 ```
 
-## Logica da IA textual
+## Lógica da IA textual
 
-A IA do MVP esta em `src/services/analisarRelato.js`. Ela normaliza o texto, remove acentos, busca palavras-chave e soma uma pontuacao de risco.
+A IA do MVP está em `src/services/analisarRelato.js`. Ela normaliza o texto, remove acentos, busca palavras-chave e soma uma pontuação de risco.
 
-Palavras e expressoes de alto peso incluem:
+Palavras e expressões de alto peso incluem:
 
 - `desaparecer`
 - `desistir`
@@ -176,7 +176,7 @@ Palavras e expressoes de alto peso incluem:
 - `nao vejo saida`
 - `quero sumir`
 
-Palavras de atencao media incluem:
+Palavras de atenção média incluem:
 
 - `sozinho`
 - `ninguem me entende`
@@ -186,22 +186,22 @@ Palavras de atencao media incluem:
 
 O resultado gera:
 
-- `risk`: baixo, medio ou alto
-- `score`: pontuacao numerica
+- `risk`: `baixo`, `medio` ou `alto` (valores internos usados pelo sistema)
+- `score`: pontuação numérica
 - `detectedWords`: sinais encontrados
 - `supportiveMessage`: mensagem acolhedora
-- `recommendation`: orientacao segura
+- `recommendation`: orientação segura
 
-## Estrutura do codigo
+## Estrutura do código
 
 ```txt
 src/
-  components/       componentes reutilizaveis
+  components/       componentes reutilizáveis
   context/          providers globais
-  firebase/         configuracao e erros Firebase
-  hooks/            hooks de auth e notificacao
+  firebase/         configuração e erros Firebase
+  hooks/            hooks de auth e notificação
   pages/            Home, Login, Cadastro, Dashboard, Diario, Historico, Perfil, Admin
-  services/         autenticacao, Firestore e IA textual
+  services/         autenticação, Firestore e IA textual
   index.css         design system responsivo do MVP
 functions/
   index.js          chatbot real via OpenAI em Cloud Functions
@@ -217,7 +217,7 @@ npm run build
 firebase deploy --only hosting,firestore:rules,firestore:indexes,functions
 ```
 
-Configuracao recomendada:
+Configuração recomendada:
 
 ```json
 {
@@ -232,6 +232,6 @@ Configuracao recomendada:
 }
 ```
 
-## Aviso etico
+## Aviso ético
 
-Este MVP nao substitui psicologos, medicos, assistentes sociais ou servicos de emergencia. Ele serve como ferramenta de registro, triagem inicial e apoio a rotas de cuidado. Em risco imediato, procure emergencia, unidade de saude, CVV 188 no Brasil ou uma pessoa de confianca.
+Este MVP não substitui psicólogos, médicos, assistentes sociais ou serviços de emergência. Ele serve como ferramenta de registro, triagem inicial e apoio a rotas de cuidado. Em risco imediato, procure emergência, unidade de saúde, CVV 188 no Brasil ou uma pessoa de confiança.

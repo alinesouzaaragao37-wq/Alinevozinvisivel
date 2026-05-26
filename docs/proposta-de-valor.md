@@ -1,42 +1,42 @@
-# Proposta de Valor - Voz Invisivel
+# Proposta de Valor - Voz Invisível
 
-## Proposito
+## Propósito
 
-O Voz Invisivel e uma plataforma digital de acolhimento e prevencao social que ajuda jovens a expressarem sinais emocionais antes que o sofrimento fique invisivel para sua rede de apoio.
+O Voz Invisível é uma plataforma digital de acolhimento e prevenção social que ajuda jovens a expressarem sinais emocionais antes que o sofrimento fique invisível para sua rede de apoio.
 
 ## Problema
 
-Jovens em situacao de ansiedade, isolamento ou sobrecarga frequentemente nao sabem como pedir ajuda, tem receio de julgamento ou nao encontram um canal acessivel para registrar o que vivem. Sem acompanhamento continuo, sinais importantes podem passar despercebidos ate a situacao se tornar urgente.
+Jovens em situação de ansiedade, isolamento ou sobrecarga frequentemente não sabem como pedir ajuda, têm receio de julgamento ou não encontram um canal acessível para registrar o que vivem. Sem acompanhamento contínuo, sinais importantes podem passar despercebidos até a situação se tornar urgente.
 
 ## Para quem entregamos valor
 
-- Jovens que precisam de um espaco privado e simples para registrar sentimentos.
-- Profissionais autorizados que necessitam identificar sinais de atencao com agilidade.
-- Instituicoes e gestores que desejam fortalecer estrategias preventivas de cuidado.
+- Jovens que precisam de um espaço privado e simples para registrar sentimentos.
+- Profissionais autorizados que necessitam identificar sinais de atenção com agilidade.
+- Instituições e gestores que desejam fortalecer estratégias preventivas de cuidado.
 
-## Solucao proposta
+## Solução proposta
 
-O MVP oferece cadastro seguro, check-in emocional diario, diario de relatos, historico visual, chatbot acolhedor e classificacao preventiva de risco. Quando ha indicios de atencao media ou alta, o sistema organiza alertas para acompanhamento humano responsavel.
+O MVP oferece cadastro seguro, check-in emocional diário, diário de relatos, histórico visual, chatbot acolhedor e classificação preventiva de risco. Quando há indícios de atenção média ou alta, o sistema organiza alertas para acompanhamento humano responsável.
 
 ## Proposta central
 
-**Transformar sentimentos silenciosos em sinais acompanhaveis, para aproximar jovens de apoio humano no momento certo.**
+**Transformar sentimentos silenciosos em sinais acompanháveis, para aproximar jovens de apoio humano no momento certo.**
 
 ## Diferenciais
 
-- Escuta inicial acessivel em uma experiencia acolhedora e responsiva.
-- Registro longitudinal, permitindo observar mudancas emocionais ao longo do tempo.
-- Uso responsavel de IA para orientacao inicial e priorizacao de sinais, sem substituir profissionais.
-- Painel administrativo para apoiar decisoes preventivas por pessoas autorizadas.
-- Arquitetura com autenticacao e regras de acesso para proteger dados sensiveis.
+- Escuta inicial acessível em uma experiência acolhedora e responsiva.
+- Registro longitudinal, permitindo observar mudanças emocionais ao longo do tempo.
+- Uso responsável de IA para orientação inicial e priorização de sinais, sem substituir profissionais.
+- Painel administrativo para apoiar decisões preventivas por pessoas autorizadas.
+- Arquitetura com autenticação e regras de acesso para proteger dados sensíveis.
 
 ## Impacto esperado
 
 - Ampliar a procura precoce por ajuda e acolhimento.
 - Reduzir a invisibilidade de sinais recorrentes de sofrimento.
-- Apoiar redes de cuidado na identificacao de situacoes prioritarias.
-- Promover uma cultura de prevencao e escuta em contextos educacionais e sociais.
+- Apoiar redes de cuidado na identificação de situações prioritárias.
+- Promover uma cultura de prevenção e escuta em contextos educacionais e sociais.
 
-## Limites eticos
+## Limites éticos
 
-O Voz Invisivel nao realiza diagnostico e nao substitui atendimento psicologico, medico ou emergencial. Os alertas apoiam triagem inicial e devem gerar acolhimento humano cuidadoso. Em risco imediato, a orientacao e buscar servicos de emergencia, unidade de saude, CVV 188 ou uma pessoa de confianca.
+O Voz Invisível não realiza diagnóstico e não substitui atendimento psicológico, médico ou emergencial. Os alertas apoiam triagem inicial e devem gerar acolhimento humano cuidadoso. Em risco imediato, a orientação é buscar serviços de emergência, unidade de saúde, CVV 188 ou uma pessoa de confiança.
