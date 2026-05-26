@@ -2,6 +2,14 @@
 
 MVP full stack em React, Vite e Firebase para sensibilidade publica, acolhimento emocional e prevencao social. O projeto foi pensado para o programa **Do Piaui para o Mundo**, eixo **Novas Tecnologias para Cidadaos, Industrias e Governos**.
 
+## Problema que enfrentamos
+
+Muitos jovens passam por ansiedade, isolamento, sobrecarga emocional ou pensamentos de desistir sem encontrar um canal simples e reservado para registrar o que estao sentindo. Quando os sinais aparecem apenas em conversas informais ou quando a situacao ja se agravou, escolas, familias e redes de apoio perdem tempo valioso para acolher e orientar.
+
+O problema nao e substituir atendimento profissional por tecnologia. E reduzir o silencio entre o primeiro sinal de sofrimento e a chegada de ajuda humana qualificada. Para isso, e necessario oferecer escuta inicial acessivel, acompanhar mudancas emocionais ao longo do tempo e destacar situacoes que merecem atencao responsavel.
+
+O **Voz Invisivel** nasce para apoiar esse percurso: a pessoa pode registrar emocao e relatos em ambiente protegido, receber orientacao acolhedora e permitir que profissionais ou gestores autorizados observem alertas preventivos, sempre respeitando privacidade e limites eticos.
+
 ## O que o MVP entrega
 
 - Home moderna com proposta de impacto social.
