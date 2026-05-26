@@ -74,7 +74,7 @@ firebase deploy --only firestore:rules,firestore:indexes
 
 O chatbot usa uma **Firebase Cloud Function** para manter a chave da OpenAI fora do navegador. A conversa exige usuário autenticado e contém proteção imediata local e moderação de mensagens relacionadas a autolesão antes de gerar respostas.
 
-1. No projeto Firebase `voz-invisivel-1e5f9`, habilite Cloud Functions. A publicação de funções normalmente requer o plano Blaze.
+1. No projeto Firebase `voz-invisivel-3ed80`, habilite Cloud Functions. A publicação de funções normalmente requer o plano Blaze.
 2. Instale as dependências do backend:
 
 ```bash
@@ -84,13 +84,13 @@ npm install --prefix functions
 3. Com o Firebase CLI autenticado, cadastre a chave da OpenAI como segredo:
 
 ```bash
-firebase functions:secrets:set OPENAI_API_KEY --project voz-invisivel-1e5f9
+firebase functions:secrets:set OPENAI_API_KEY --project voz-invisivel-3ed80
 ```
 
 4. Publique a função:
 
 ```bash
-firebase deploy --only functions:respondToChat --project voz-invisivel-1e5f9
+firebase deploy --only functions:respondToChat --project voz-invisivel-3ed80
 ```
 
 O modelo padrão é `gpt-5-mini`; ele pode ser alterado no parâmetro `OPENAI_CHAT_MODEL` durante a publicação. Nunca coloque `OPENAI_API_KEY` no arquivo `.env` do frontend.
