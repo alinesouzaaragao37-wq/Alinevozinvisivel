@@ -1,4 +1,5 @@
 import { signOut } from 'firebase/auth'
+import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { auth } from '../firebase/config'
 import { useAuth } from '../hooks/useAuth'
@@ -6,6 +7,7 @@ import { useAuth } from '../hooks/useAuth'
 function Navbar() {
   const navigate = useNavigate()
   const { user, profile, isAdmin } = useAuth()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   async function logout() {
     if (auth) await signOut(auth)
@@ -13,13 +15,30 @@ function Navbar() {
   }
 
   return (
-    <header className="navbar">
+    <header className={menuOpen ? 'navbar menu-open' : 'navbar'}>
       <Link to="/" className="brand" aria-label="Voz Invisivel">
         <span className="brand-mark">VI</span>
         <span>Voz Invisivel</span>
       </Link>
 
-      <nav className="nav-links">
+      <button
+        className="nav-toggle"
+        type="button"
+        aria-expanded={menuOpen}
+        aria-controls="main-navigation"
+        aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
+      <nav
+        className="nav-links"
+        id="main-navigation"
+        onClick={() => setMenuOpen(false)}
+      >
         {user && !isAdmin && <NavLink to="/dashboard">Meu espaco</NavLink>}
         {user && !isAdmin && <NavLink to="/diario">Diario</NavLink>}
         {user && !isAdmin && <NavLink to="/historico">Historico</NavLink>}

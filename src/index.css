@@ -29,6 +29,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   min-width: 320px;
   margin: 0;
@@ -36,6 +40,12 @@ body {
     radial-gradient(circle at 10% 0%, rgba(208, 238, 226, 0.74), transparent 38%),
     linear-gradient(130deg, rgba(238, 245, 241, 0.92), rgba(246, 244, 239, 0.8)),
     #f6f4ef;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
 a {
@@ -54,7 +64,7 @@ button {
 }
 
 main {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1180px, calc(100% - clamp(24px, 5vw, 48px)));
   margin: 0 auto;
 }
 
@@ -111,6 +121,43 @@ p {
   overflow-x: auto;
 }
 
+.nav-toggle {
+  display: none;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  gap: 5px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.menu-open .nav-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .nav-links a {
   padding: 9px 12px;
   border-radius: 999px;
@@ -147,6 +194,7 @@ p {
   cursor: pointer;
   font-weight: 900;
   text-decoration: none;
+  text-align: center;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -193,7 +241,7 @@ p {
 
 .home-page,
 .app-page {
-  padding: 42px 0 80px;
+  padding: clamp(26px, 4vw, 42px) 0 clamp(48px, 8vw, 80px);
 }
 
 .platform-hero {
@@ -263,6 +311,16 @@ p {
   gap: 26px;
   align-items: stretch;
   padding: clamp(22px, 4vw, 42px);
+}
+
+.hero-grid-panel > *,
+.operating-system > *,
+.dashboard-grid > *,
+.diary-layout > *,
+.history-layout > *,
+.admin-grid > *,
+.profile-grid > * {
+  min-width: 0;
 }
 
 .hero-intro-card {
@@ -839,6 +897,11 @@ textarea {
   margin-bottom: 22px;
 }
 
+.page-heading {
+  max-width: 850px;
+  margin-bottom: clamp(22px, 4vw, 34px);
+}
+
 .dashboard-hero h1,
 .page-heading h1 {
   font-size: clamp(34px, 5vw, 58px);
@@ -1117,6 +1180,12 @@ textarea {
   display: grid;
   gap: 8px;
   margin-top: 18px;
+}
+
+.profile-meta span,
+.timeline-item small,
+.alert-item p {
+  overflow-wrap: anywhere;
 }
 
 .empty-state,
