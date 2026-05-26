@@ -31,10 +31,6 @@ service cloud.firestore {
       return hasUserProfile() && userProfile().role == 'admin';
     }
 
-    function allowedRole(role) {
-      return role in ['jovem', 'profissional', 'gestor', 'admin'];
-    }
-
     function validUserCreate(userId) {
       return isSelf(userId)
         && request.resource.data.uid == request.auth.uid

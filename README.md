@@ -71,7 +71,7 @@ VITE_FIREBASE_USE_AI_CHAT=false
 ```bash
 firebase login
 firebase use --add
-firebase deploy --only firestore:rules
+firebase deploy --only firestore --project voz-invisivel-3ed80
 ```
 
 Enquanto o banco ainda não tiver sido criado, mantenha
@@ -232,7 +232,7 @@ Para publicar em Firebase Hosting, atualize `firebase.json` com Hosting ou use:
 ```bash
 firebase init hosting
 npm run build
-firebase deploy --only hosting,firestore:rules,functions
+firebase deploy --only hosting,firestore,functions --project voz-invisivel-3ed80
 ```
 
 Configuração recomendada:
