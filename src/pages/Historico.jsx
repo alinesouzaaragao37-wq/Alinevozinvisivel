@@ -21,6 +21,7 @@ function Historico() {
   const [error, setError] = useState('')
   const [editing, setEditing] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [typeFilter, setTypeFilter] = useState('todos')
 
   useEffect(() => {
     if (firestoreError) {
@@ -48,8 +49,10 @@ function Historico() {
       [
         ...checkins.map((item) => ({ ...item, type: 'Check-in' })),
         ...logs.map((item) => ({ ...item, type: 'Diário' })),
-      ].sort((a, b) => getTime(b.createdAt) - getTime(a.createdAt)),
-    [checkins, logs],
+      ]
+        .sort((a, b) => getTime(b.createdAt) - getTime(a.createdAt))
+        .filter((item) => typeFilter === 'todos' || item.type === typeFilter),
+    [checkins, logs, typeFilter],
   )
 
   function beginEdit(item) {
@@ -127,10 +130,20 @@ function Historico() {
             <span className="eyebrow">Linha do tempo</span>
             <h2>Últimos registros</h2>
           </div>
+          <div className="history-filters">
+            <label>
+              Tipo de registro
+              <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
+                <option value="todos">Todos</option>
+                <option value="Check-in">Check-ins</option>
+                <option value="Diário">Diário</option>
+              </select>
+            </label>
+          </div>
           {timeline.length === 0 && (
             <div className="empty-state warm">
-              <strong>Sua jornada pode começar hoje.</strong>
-              <p>Faça um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.</p>
+              <strong>{typeFilter === 'todos' ? 'Sua jornada pode começar hoje.' : 'Nenhum registro neste filtro.'}</strong>
+              <p>{typeFilter === 'todos' ? 'Faça um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.' : 'Selecione outro tipo para consultar sua linha do tempo.'}</p>
             </div>
           )}
           {timeline.map((item) => (
