@@ -56,7 +56,13 @@ function Chatbot() {
           </button>
         ))}
       </div>
-      <div className="chat-window">
+      <div
+        aria-busy={sending}
+        aria-label="Mensagens da conversa"
+        aria-live="polite"
+        className="chat-window"
+        role="log"
+      >
         {messages.map((message, index) => (
           <p className={`chat-message ${message.from}`} key={`${message.from}-${index}`}>
             {message.text}
@@ -66,6 +72,7 @@ function Chatbot() {
       </div>
       <form className="chat-form" onSubmit={send}>
         <input
+          aria-label="Digite sua mensagem"
           value={text}
           onChange={(event) => setText(event.target.value)}
           placeholder="Conte um pouco do que você está sentindo..."
@@ -75,7 +82,7 @@ function Chatbot() {
           {sending ? 'Respondendo...' : 'Enviar'}
         </button>
       </form>
-      {error && <p className="form-error">{error}</p>}
+      {error && <p className="form-error" role="alert">{error}</p>}
       <p className="chat-help">
         Suas mensagens recebem uma orientação automatizada de acolhimento.
         Evite compartilhar dados pessoais.{' '}
