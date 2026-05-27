@@ -911,6 +911,18 @@ textarea {
   font-weight: 900;
 }
 
+.password-requirement {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.password-requirement.valid {
+  color: var(--green);
+}
+
 .auth-card .button.full,
 .checkin-panel .button.full,
 .diary-form .button.full {

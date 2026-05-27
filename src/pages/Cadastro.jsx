@@ -13,6 +13,7 @@ function Cadastro() {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const passwordHasMinimumLength = form.password.length >= 6
 
   function update(field, value) {
     setForm((current) => ({ ...current, [field]: value }))
@@ -88,6 +89,14 @@ function Cadastro() {
               minLength={6}
               required
             />
+            <small
+              className={passwordHasMinimumLength ? 'password-requirement valid' : 'password-requirement'}
+              aria-live="polite"
+            >
+              {passwordHasMinimumLength
+                ? 'Requisito atendido: pelo menos 6 caracteres.'
+                : 'Use pelo menos 6 caracteres.'}
+            </small>
           </label>
           {error && (
             <p className="form-error" id="cadastro-error" role="alert">
