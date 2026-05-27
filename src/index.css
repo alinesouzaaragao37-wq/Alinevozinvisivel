@@ -917,6 +917,12 @@ textarea {
   margin-top: 16px;
 }
 
+.field-helper {
+  display: block;
+  margin-top: 6px;
+  text-align: right;
+}
+
 .auth-card .button.full + .button.full {
   margin-top: 8px;
 }

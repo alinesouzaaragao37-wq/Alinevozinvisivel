@@ -7,6 +7,7 @@ import { useToast } from '../hooks/useToast'
 import { saveDiaryEntry } from '../services/emotionalService'
 
 const emotions = ['feliz', 'cansado', 'triste', 'ansioso', 'sozinho', 'motivado', 'sobrecarregado']
+const maxDiaryLength = 1000
 const riskLabels = { baixo: 'baixo', medio: 'médio', alto: 'alto' }
 
 function Diario() {
@@ -78,9 +79,13 @@ function Diario() {
               value={text}
               onChange={(event) => setText(event.target.value)}
               minLength={12}
+              maxLength={maxDiaryLength}
               required
               placeholder="Ex.: Hoje estou me sentindo sozinho..."
             />
+            <small className="field-helper">
+              {text.length}/{maxDiaryLength} caracteres
+            </small>
           </label>
           {(error || firestoreMessage) && <p className="form-error">{error || firestoreMessage}</p>}
           <button className="button primary full" type="submit" disabled={loading || !!firestoreError}>
