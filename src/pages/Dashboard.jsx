@@ -72,6 +72,12 @@ function Dashboard() {
     return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0]
   }, [checkins])
 
+  const averageIntensity = useMemo(() => {
+    if (!checkins.length) return 'Sem registros'
+    const total = checkins.reduce((sum, item) => sum + Number(item.intensity || 0), 0)
+    return `${(total / checkins.length).toFixed(1)}/10`
+  }, [checkins])
+
   const highRiskCount = logs.filter((log) => log.risk === 'alto').length
   const latest = checkins[0]
 
@@ -122,6 +128,7 @@ function Dashboard() {
       <section className="stats-grid">
         <StatCard label="Check-ins" value={checkins.length} detail="últimos registros" />
         <StatCard label="Emoção frequente" value={mostFrequentEmotion} detail="baseado no histórico" />
+        <StatCard label="Intensidade média" value={averageIntensity} detail="check-ins recentes" />
         <StatCard label="Diário" value={logs.length} detail="relatos analisados" />
         <StatCard label="Alertas altos" value={highRiskCount} detail="sinais preventivos" tone="danger" />
       </section>
