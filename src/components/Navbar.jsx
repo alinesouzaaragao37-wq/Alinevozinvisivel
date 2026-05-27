@@ -14,6 +14,11 @@ function Navbar() {
   const [signingOut, setSigningOut] = useState(false)
 
   async function logout() {
+    const confirmed = window.confirm(
+      'Deseja sair da sua conta? Verifique se seus registros foram salvos antes de continuar.',
+    )
+    if (!confirmed) return
+
     setSigningOut(true)
     try {
       if (auth) await signOut(auth)
