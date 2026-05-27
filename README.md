@@ -16,6 +16,7 @@ Aplicação publicada: [https://voz-invisivel-3ed80.web.app](https://voz-invisiv
 
 - Home moderna com proposta de impacto social.
 - Cadastro, login, login com Google, logout e persistência de sessão via Firebase Authentication.
+- Recuperação de senha e confirmação de e-mail no cadastro.
 - Dashboard do jovem com check-in emocional diário.
 - Diário emocional com IA textual simples baseada em palavras-chave.
 - Classificação preventiva de risco: baixo, médio e alto.
@@ -24,6 +25,7 @@ Aplicação publicada: [https://voz-invisivel-3ed80.web.app](https://voz-invisiv
 - Edição e exclusão dos próprios check-ins e relatos, com confirmação antes de remover.
 - Perfil do usuário.
 - Painel administrativo com usuários, check-ins, relatos, emoções frequentes e alertas.
+- Filtros de alertas e exportação de resumo administrativo sem dados pessoais.
 - Firestore organizado em `users`, `checkins`, `emotionalLogs` e `alerts`.
 - Rotas protegidas, loading screen, notificações e layout responsivo.
 
@@ -218,6 +220,7 @@ O resultado gera:
 docs/
   proposta-de-valor.md          contexto e justificativa da solução
   roteiro-de-apresentacao.md    apoio para demonstração à banca
+  guia-de-demonstracao.md       dados fictícios e cuidados para demonstrar
 public/
   favicon.svg                   identidade visual exibida no navegador
 src/
