@@ -22,6 +22,7 @@ function Historico() {
   const [editing, setEditing] = useState(null)
   const [saving, setSaving] = useState(false)
   const [typeFilter, setTypeFilter] = useState('todos')
+  const [riskFilter, setRiskFilter] = useState('todos')
 
   useEffect(() => {
     if (firestoreError) {
@@ -51,9 +52,12 @@ function Historico() {
         ...logs.map((item) => ({ ...item, type: 'Diário' })),
       ]
         .sort((a, b) => getTime(b.createdAt) - getTime(a.createdAt))
-        .filter((item) => typeFilter === 'todos' || item.type === typeFilter),
-    [checkins, logs, typeFilter],
+        .filter((item) => typeFilter === 'todos' || item.type === typeFilter)
+        .filter((item) => riskFilter === 'todos' || item.risk === riskFilter),
+    [checkins, logs, typeFilter, riskFilter],
   )
+
+  const hasActiveFilter = typeFilter !== 'todos' || riskFilter !== 'todos'
 
   function beginEdit(item) {
     setEditing({
@@ -139,11 +143,20 @@ function Historico() {
                 <option value="Diário">Diário</option>
               </select>
             </label>
+            <label>
+              Risco do relato
+              <select value={riskFilter} onChange={(event) => setRiskFilter(event.target.value)}>
+                <option value="todos">Todos</option>
+                <option value="baixo">Baixo</option>
+                <option value="medio">Médio</option>
+                <option value="alto">Alto</option>
+              </select>
+            </label>
           </div>
           {timeline.length === 0 && (
             <div className="empty-state warm">
-              <strong>{typeFilter === 'todos' ? 'Sua jornada pode começar hoje.' : 'Nenhum registro neste filtro.'}</strong>
-              <p>{typeFilter === 'todos' ? 'Faça um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.' : 'Selecione outro tipo para consultar sua linha do tempo.'}</p>
+              <strong>{hasActiveFilter ? 'Nenhum registro neste filtro.' : 'Sua jornada pode começar hoje.'}</strong>
+              <p>{hasActiveFilter ? 'Selecione outros filtros para consultar sua linha do tempo.' : 'Faça um check-in quando estiver pronto. Cada registro ajuda a perceber seus caminhos.'}</p>
             </div>
           )}
           {timeline.map((item) => (
