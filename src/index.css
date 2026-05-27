@@ -1006,6 +1006,12 @@ textarea {
   align-items: start;
 }
 
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 18px;
+}
+
 .panel-heading {
   margin-bottom: 18px;
 }
@@ -1171,6 +1177,22 @@ textarea {
   gap: 12px;
 }
 
+.alert-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.alert-filters label {
+  margin-top: 0;
+  font-size: 13px;
+}
+
+.alert-filters select {
+  padding: 9px 10px;
+}
+
 .timeline-item,
 .alert-item {
   padding: 16px;
@@ -1233,6 +1255,11 @@ textarea {
 
 .alert-item.medio {
   border-color: #f2cd8f;
+}
+
+.status-resolved {
+  color: var(--green);
+  font-size: 13px;
 }
 
 .profile-meta {
@@ -1593,6 +1620,10 @@ textarea {
   .diary-layout,
   .history-layout,
   .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .alert-filters {
     grid-template-columns: 1fr;
   }
 
