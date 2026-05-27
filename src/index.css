@@ -1281,6 +1281,20 @@ textarea {
   margin-top: 18px;
 }
 
+.profile-name-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.profile-name-form label {
+  margin-top: 0;
+}
+
+.profile-name-form .button {
+  justify-self: start;
+}
+
 .profile-meta span,
 .timeline-item small,
 .alert-item p {

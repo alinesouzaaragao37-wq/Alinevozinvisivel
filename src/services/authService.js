@@ -82,3 +82,32 @@ export async function resendVerificationEmail(user) {
   ensureFirebase()
   return sendEmailVerification(user)
 }
+
+export async function updateDisplayName(user, name) {
+  ensureFirebase()
+  const trimmedName = name.trim()
+  await updateProfile(user, { displayName: trimmedName })
+
+  if (cloudFirestoreEnabled && db) {
+    await setDoc(
+      doc(db, 'users', user.uid),
+      { name: trimmedName, updatedAt: serverTimestamp() },
+      { merge: true },
+    )
+    return trimmedName
+  }
+
+  const localKey = `voz-invisivel.profile.${user.uid}`
+  const currentProfile = JSON.parse(localStorage.getItem(localKey) || '{}')
+  localStorage.setItem(
+    localKey,
+    JSON.stringify({
+      ...currentProfile,
+      uid: user.uid,
+      name: trimmedName,
+      email: user.email,
+      role: currentProfile.role || 'jovem',
+    }),
+  )
+  return trimmedName
+}
