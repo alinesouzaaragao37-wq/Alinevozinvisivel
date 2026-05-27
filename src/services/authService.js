@@ -77,3 +77,8 @@ export async function requestPasswordReset(email) {
   ensureFirebase()
   return sendPasswordResetEmail(auth, email)
 }
+
+export async function resendVerificationEmail(user) {
+  ensureFirebase()
+  return sendEmailVerification(user)
+}

@@ -1,7 +1,27 @@
+import { useState } from 'react'
+import { traduzirErroFirebase } from '../firebase/errors'
 import { useAuth } from '../hooks/useAuth'
+import { useToast } from '../hooks/useToast'
+import { resendVerificationEmail } from '../services/authService'
 
 function Perfil() {
   const { user, profile } = useAuth()
+  const { notify } = useToast()
+  const [sendingVerification, setSendingVerification] = useState(false)
+  const [error, setError] = useState('')
+
+  async function resendVerification() {
+    setError('')
+    setSendingVerification(true)
+    try {
+      await resendVerificationEmail(user)
+      notify('E-mail de confirmação reenviado. Verifique sua caixa de entrada.')
+    } catch (err) {
+      setError(traduzirErroFirebase(err))
+    } finally {
+      setSendingVerification(false)
+    }
+  }
 
   return (
     <main className="app-page">
@@ -17,8 +37,24 @@ function Perfil() {
           <p>{profile?.email || user.email}</p>
           <div className="profile-meta">
             <span>Perfil: {profile?.role || 'jovem'}</span>
+            <span>E-mail: {user.emailVerified ? 'confirmado' : 'confirmação pendente'}</span>
             <span>UID: {user.uid}</span>
           </div>
+          {!user.emailVerified && (
+            <button
+              className="button secondary small profile-action"
+              disabled={sendingVerification}
+              type="button"
+              onClick={resendVerification}
+            >
+              {sendingVerification ? 'Enviando...' : 'Reenviar confirmação'}
+            </button>
+          )}
+          {error && (
+            <p className="form-error" role="alert">
+              {error}
+            </p>
+          )}
         </article>
         <article className="panel">
           <span className="eyebrow">Privacidade</span>

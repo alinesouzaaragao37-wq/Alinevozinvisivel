@@ -23,7 +23,7 @@ Aplicação publicada: [https://voz-invisivel-3ed80.web.app](https://voz-invisiv
 - Chatbot acolhedor com orientação automatizada e opção de IA em backend protegido.
 - Histórico com últimos registros, emoções frequentes e gráfico simples.
 - Edição e exclusão dos próprios check-ins e relatos, com confirmação antes de remover.
-- Perfil do usuário.
+- Perfil do usuário com acompanhamento e reenvio de confirmação de e-mail.
 - Painel administrativo com usuários, check-ins, relatos, emoções frequentes e alertas.
 - Filtros de alertas e exportação de resumo administrativo sem dados pessoais.
 - Firestore organizado em `users`, `checkins`, `emotionalLogs` e `alerts`.

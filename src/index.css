@@ -1277,6 +1277,10 @@ textarea {
   margin-top: 18px;
 }
 
+.profile-action {
+  margin-top: 18px;
+}
+
 .profile-meta span,
 .timeline-item small,
 .alert-item p {
