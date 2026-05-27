@@ -35,7 +35,7 @@ function Cadastro() {
 
   return (
     <main className="auth-page">
-      <form className="auth-card wide" onSubmit={submit}>
+      <form className="auth-card wide" onSubmit={submit} aria-busy={loading}>
         <div className="auth-intro">
           <span className="eyebrow">Comece com calma</span>
           <h1>Crie seu espaço de cuidado.</h1>
@@ -52,8 +52,11 @@ function Cadastro() {
           <label>
             Nome
             <input
+              autoComplete="name"
               value={form.name}
               onChange={(event) => update('name', event.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'cadastro-error' : undefined}
               required
             />
           </label>
@@ -61,8 +64,11 @@ function Cadastro() {
             E-mail
             <input
               type="email"
+              autoComplete="email"
               value={form.email}
               onChange={(event) => update('email', event.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'cadastro-error' : undefined}
               required
             />
           </label>
@@ -70,13 +76,20 @@ function Cadastro() {
             Senha
             <input
               type="password"
+              autoComplete="new-password"
               value={form.password}
               onChange={(event) => update('password', event.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'cadastro-error' : undefined}
               minLength={6}
               required
             />
           </label>
-          {error && <p className="form-error">{error}</p>}
+          {error && (
+            <p className="form-error" id="cadastro-error" role="alert">
+              {error}
+            </p>
+          )}
 
           <button className="button primary full" disabled={loading} type="submit">
             {loading ? 'Criando...' : 'Criar cadastro'}

@@ -43,7 +43,7 @@ function Login() {
 
   return (
     <main className="auth-page">
-      <form className="auth-card" onSubmit={submit}>
+      <form className="auth-card" onSubmit={submit} aria-busy={loading}>
         <div className="auth-intro">
           <span className="eyebrow">Bem-vindo de volta</span>
           <h1>Seu espaço espera por você.</h1>
@@ -58,8 +58,11 @@ function Login() {
             E-mail
             <input
               type="email"
+              autoComplete="email"
               value={form.email}
               onChange={(event) => update('email', event.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'login-error' : undefined}
               required
             />
           </label>
@@ -67,14 +70,21 @@ function Login() {
             Senha
             <input
               type="password"
+              autoComplete="current-password"
               value={form.password}
               onChange={(event) => update('password', event.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'login-error' : undefined}
               minLength={6}
               required
             />
           </label>
 
-          {error && <p className="form-error">{error}</p>}
+          {error && (
+            <p className="form-error" id="login-error" role="alert">
+              {error}
+            </p>
+          )}
 
           <button className="button primary full" disabled={loading} type="submit">
             {loading ? 'Entrando...' : 'Entrar'}
