@@ -10,6 +10,8 @@ O problema não é substituir atendimento profissional por tecnologia. É reduzi
 
 O **Voz Invisível** nasce para apoiar esse percurso: a pessoa pode registrar emoção e relatos em ambiente protegido, receber orientação acolhedora e permitir que profissionais ou gestores autorizados observem alertas preventivos, sempre respeitando privacidade e limites éticos.
 
+Aplicação publicada: [https://voz-invisivel-3ed80.web.app](https://voz-invisivel-3ed80.web.app)
+
 ## O que o MVP entrega
 
 - Home moderna com proposta de impacto social.
@@ -62,7 +64,7 @@ VITE_FIREBASE_STORAGE_BUCKET=...
 VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=...
 VITE_FIREBASE_USE_FIRESTORE=true
-VITE_FIREBASE_FIRESTORE_DATABASE_ID=(default)
+VITE_FIREBASE_FIRESTORE_DATABASE_ID=default
 VITE_FIREBASE_USE_AI_CHAT=false
 ```
 
@@ -213,6 +215,11 @@ O resultado gera:
 ## Estrutura do código
 
 ```txt
+docs/
+  proposta-de-valor.md          contexto e justificativa da solução
+  roteiro-de-apresentacao.md    apoio para demonstração à banca
+public/
+  favicon.svg                   identidade visual exibida no navegador
 src/
   components/       componentes reutilizáveis
   context/          providers globais
@@ -223,6 +230,9 @@ src/
   index.css         design system responsivo do MVP
 functions/
   index.js          chatbot real via OpenAI em Cloud Functions
+firebase.json       configuração de Hosting, Firestore e Functions
+firestore.rules     regras de acesso aos dados
+firestore.indexes.json indices utilizados em consultas
 ```
 
 ## Deploy
