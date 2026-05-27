@@ -1,6 +1,8 @@
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
@@ -19,21 +21,25 @@ export async function registerWithEmail({ name, email, password }) {
   const credential = await createUserWithEmailAndPassword(auth, email, password)
   await updateProfile(credential.user, { displayName: name })
 
-  if (!cloudFirestoreEnabled || !db) {
-    return credential.user
+  if (cloudFirestoreEnabled && db) {
+    const profile = {
+      uid: credential.user.uid,
+      name,
+      email,
+      role: 'jovem',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    }
+
+    await setDoc(doc(db, 'users', credential.user.uid), profile)
   }
 
-  const profile = {
-    uid: credential.user.uid,
-    name,
-    email,
-    role: 'jovem',
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
+  try {
+    await sendEmailVerification(credential.user)
+    return { user: credential.user, verificationEmailSent: true }
+  } catch {
+    return { user: credential.user, verificationEmailSent: false }
   }
-
-  await setDoc(doc(db, 'users', credential.user.uid), profile)
-  return credential.user
 }
 
 export async function loginWithEmail(email, password) {
@@ -65,4 +71,9 @@ export async function loginWithGoogle() {
   }
 
   return credential.user
+}
+
+export async function requestPasswordReset(email) {
+  ensureFirebase()
+  return sendPasswordResetEmail(auth, email)
 }

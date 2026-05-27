@@ -24,6 +24,9 @@ export function traduzirErroFirebase(error, authProvider = '') {
   const mensagens = {
     'auth/email-already-in-use': 'Este e-mail já está cadastrado.',
     'auth/invalid-email': 'Informe um e-mail válido.',
+    'auth/missing-email': 'Informe seu e-mail para continuar.',
+    'auth/too-many-requests':
+      'Muitas tentativas foram realizadas. Aguarde alguns instantes e tente novamente.',
     'auth/invalid-credential':
       'Conta não encontrada ou senha incorreta. Se este for seu primeiro acesso neste ambiente, crie seu cadastro.',
     'auth/configuration-not-found':

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useToast } from '../hooks/useToast'
-import { loginWithEmail, loginWithGoogle } from '../services/authService'
+import { loginWithEmail, loginWithGoogle, requestPasswordReset } from '../services/authService'
 
 function Login() {
   const { notify } = useToast()
@@ -36,6 +36,25 @@ function Login() {
       notify('Login com Google realizado.')
     } catch (err) {
       setError(traduzirErroFirebase(err, 'google'))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function recoverPassword() {
+    setError('')
+
+    if (!form.email.trim()) {
+      setError('Informe seu e-mail para receber o link de recuperação.')
+      return
+    }
+
+    setLoading(true)
+    try {
+      await requestPasswordReset(form.email.trim())
+      notify('Se este e-mail estiver cadastrado, enviaremos um link de recuperação.')
+    } catch (err) {
+      setError(traduzirErroFirebase(err))
     } finally {
       setLoading(false)
     }
@@ -96,6 +115,14 @@ function Login() {
             onClick={googleLogin}
           >
             Entrar com Google
+          </button>
+          <button
+            className="button ghost full"
+            disabled={loading}
+            type="button"
+            onClick={recoverPassword}
+          >
+            Esqueci minha senha
           </button>
 
           <p className="auth-switch">

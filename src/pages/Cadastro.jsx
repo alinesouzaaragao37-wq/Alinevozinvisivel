@@ -24,8 +24,12 @@ function Cadastro() {
     setLoading(true)
 
     try {
-      await registerWithEmail(form)
-      notify('Cadastro criado. Bem-vindo à Voz Invisível.')
+      const { verificationEmailSent } = await registerWithEmail(form)
+      notify(
+        verificationEmailSent
+          ? 'Cadastro criado. Confira seu e-mail para confirmar a conta.'
+          : 'Cadastro criado. Entre na sua conta para continuar.',
+      )
     } catch (err) {
       setError(traduzirErroFirebase(err))
     } finally {
