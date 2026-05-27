@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
+import PublicOnlyRoute from './components/PublicOnlyRoute'
 import { AuthProvider } from './context/AuthContext'
 import { ToastProvider } from './context/ToastContext'
 import Admin from './pages/Admin'
@@ -18,8 +19,22 @@ function AppRoutes() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <Login />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/cadastro"
+          element={
+            <PublicOnlyRoute>
+              <Cadastro />
+            </PublicOnlyRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={

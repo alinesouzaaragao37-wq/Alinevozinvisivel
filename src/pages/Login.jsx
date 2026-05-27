@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useToast } from '../hooks/useToast'
 import { loginWithEmail, loginWithGoogle } from '../services/authService'
 
 function Login() {
-  const navigate = useNavigate()
   const { notify } = useToast()
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
@@ -22,7 +21,6 @@ function Login() {
     try {
       await loginWithEmail(form.email, form.password)
       notify('Sessão iniciada com sucesso.')
-      navigate('/dashboard')
     } catch (err) {
       setError(traduzirErroFirebase(err))
     } finally {
@@ -36,7 +34,6 @@ function Login() {
     try {
       await loginWithGoogle()
       notify('Login com Google realizado.')
-      navigate('/dashboard')
     } catch (err) {
       setError(traduzirErroFirebase(err, 'google'))
     } finally {

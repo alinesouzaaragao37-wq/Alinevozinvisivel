@@ -2,16 +2,28 @@ import { signOut } from 'firebase/auth'
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { auth } from '../firebase/config'
+import { traduzirErroFirebase } from '../firebase/errors'
 import { useAuth } from '../hooks/useAuth'
+import { useToast } from '../hooks/useToast'
 
 function Navbar() {
   const navigate = useNavigate()
   const { user, profile, isAdmin } = useAuth()
+  const { notify } = useToast()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [signingOut, setSigningOut] = useState(false)
 
   async function logout() {
-    if (auth) await signOut(auth)
-    navigate('/')
+    setSigningOut(true)
+    try {
+      if (auth) await signOut(auth)
+      notify('Sessão encerrada com segurança.')
+      navigate('/', { replace: true })
+    } catch (error) {
+      notify(traduzirErroFirebase(error), 'error')
+    } finally {
+      setSigningOut(false)
+    }
   }
 
   return (
@@ -52,8 +64,13 @@ function Navbar() {
             </Link>
           </>
         ) : (
-          <button type="button" className="button ghost small" onClick={logout}>
-            Sair
+          <button
+            type="button"
+            className="button ghost small"
+            disabled={signingOut}
+            onClick={logout}
+          >
+            {signingOut ? 'Saindo...' : 'Sair'}
           </button>
         )}
       </nav>

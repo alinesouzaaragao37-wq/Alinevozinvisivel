@@ -25,6 +25,7 @@ export function AuthProvider({ children }) {
     }
 
     return onAuthStateChanged(auth, async (currentUser) => {
+      setLoading(true)
       setUser(currentUser)
 
       if (!currentUser) {

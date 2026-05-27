@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { traduzirErroFirebase } from '../firebase/errors'
 import { useToast } from '../hooks/useToast'
 import { registerWithEmail } from '../services/authService'
 
 function Cadastro() {
-  const navigate = useNavigate()
   const { notify } = useToast()
   const [form, setForm] = useState({
     name: '',
@@ -27,7 +26,6 @@ function Cadastro() {
     try {
       await registerWithEmail(form)
       notify('Cadastro criado. Bem-vindo à Voz Invisível.')
-      navigate('/dashboard')
     } catch (err) {
       setError(traduzirErroFirebase(err))
     } finally {
