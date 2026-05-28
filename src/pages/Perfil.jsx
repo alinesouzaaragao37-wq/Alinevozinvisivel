@@ -77,7 +77,6 @@ function Perfil() {
           <div className="profile-meta">
             <span>Perfil: {profile?.role || 'jovem'}</span>
             <span>E-mail: {user.emailVerified ? 'confirmado' : 'confirmação pendente'}</span>
-            <span>UID: {user.uid}</span>
           </div>
           {!user.emailVerified && (
             <button
