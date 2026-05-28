@@ -12,6 +12,10 @@ O **Voz Invisível** nasce para apoiar esse percurso: a pessoa pode registrar em
 
 Aplicação publicada: [https://voz-invisivel-3ed80.web.app](https://voz-invisivel-3ed80.web.app)
 
+Repositório: [https://github.com/alinesouzaaragao37-wq/Alinevozinvisivel.git](https://github.com/alinesouzaaragao37-wq/Alinevozinvisivel.git)
+
+Para avaliação rápida, acesse a aplicação publicada. Ela está hospedada no Firebase Hosting e não depende do computador local estar ligado.
+
 ## O que o MVP entrega
 
 - Home moderna com proposta de impacto social.
@@ -49,6 +53,8 @@ No Windows, se o PowerShell bloquear `npm.ps1`, use:
 npm.cmd run dev
 npm.cmd run build
 ```
+
+Sem configurar o arquivo `.env`, o projeto pode abrir a interface, mas login, cadastro e sincronização com Firestore não funcionam. Para testar o sistema completo localmente, configure o Firebase conforme a seção abaixo.
 
 ## Configurar Firebase
 
@@ -240,27 +246,19 @@ firestore.indexes.json indices utilizados em consultas
 
 ## Deploy
 
-Para publicar em Firebase Hosting, atualize `firebase.json` com Hosting ou use:
+O projeto já possui `firebase.json` configurado para Firebase Hosting, Cloud Firestore e Functions. O Firestore usa o banco com ID `default`.
+
+Para publicar Hosting e regras do Firestore:
 
 ```bash
-firebase init hosting
 npm run build
-firebase deploy --only hosting,firestore,functions --project voz-invisivel-3ed80
+firebase deploy --only hosting,firestore --project voz-invisivel-3ed80
 ```
 
-Configuração recomendada:
+Para publicar também a função real do chatbot, configure antes o segredo `OPENAI_API_KEY` e execute:
 
-```json
-{
-  "firestore": {
-    "rules": "firestore.rules"
-  },
-  "hosting": {
-    "public": "dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [{ "source": "**", "destination": "/index.html" }]
-  }
-}
+```bash
+firebase deploy --only functions:respondToChat --project voz-invisivel-3ed80
 ```
 
 ## Aviso ético
